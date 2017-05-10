@@ -11,7 +11,7 @@ widget::widget(QWidget *parent) :
     ui(new Ui::widget)
 {
     ui->setupUi(this);
-    QFile file("C:/Users/User/git/Image-PPG-test/out.txt");
+    QFile file("out.txt");
     file.open(QIODevice::Append);
     QDataStream out(&file);
     out << QString("the answer is");   // serialize a string
