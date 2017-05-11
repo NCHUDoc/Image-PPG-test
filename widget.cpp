@@ -19,6 +19,7 @@ unsigned char cb_img[240][320];
 unsigned char cr_img[240][320];
 unsigned char rgb_buffer[640*480*3];
 unsigned char  yuv_buffer_pointer[640*480*3];
+qint8 enable;
 
 widget::widget(QWidget *parent) :
     QWidget(parent),
@@ -66,3 +67,37 @@ widget::~widget()
 {
     delete ui;
 }
+
+//void widget::paintEvent(QPaintEvent *)
+//{
+//    enable=1;
+//}
+
+//void widget::cal_start(){
+//    //enable=1;
+//}
+
+//void widget::plotAdCurve(){
+
+//    //enable=1;
+//    //readAdData(xData,yData);
+//    //p_adplot->setSamples(xData,yData);
+
+//    //p_adplot->attach(ui->qwtPlot);
+//    //ui->qwtPlot->replot();
+//    //adPlotTimer->start(1000);
+//}
+
+
+//void widget::plotPSDCurve(){
+
+
+
+//    //readPSDData(uptimeData,ratioData);
+//    //p_psdplot->setSamples(uptimeData,ratioData);
+
+//    //p_psdplot->attach(ui->psdPlot);
+//    //ui->psdPlot->replot();
+//    //adPlotTimer->start(1000);
+
+//}
