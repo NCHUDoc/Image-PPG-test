@@ -17,12 +17,19 @@ widget::widget(QWidget *parent) :
 {
     ui->setupUi(this);
     QFile file("new000.yuv");
+    //QFile file("out.txt");
+    //QString bytes = "";
+    qint64 bytes;
     file.open(QIODevice::ReadOnly);
-    //QDataStream data(&file);
-    qint8 bytes = file.read(static_cast<char *>(y_color), sizeof(y_color));
+    //QByteArray bytes = file.readAll();
 
-    file.close();
+    QDataStream data(&file);
+    //qint8 bytes = file.read(static_cast<char *>(y_color), sizeof(y_color));
+    //qint16 bytes;
+    data >> bytes;
+
     qDebug()<<"Read one byte from file new000.yuv: "<<bytes;
+    file.close();
 //    video_ptr = fopen("C:/Users/User/git/Imag-PPG-test/zz05.yuv","rb");
 //    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
 }
