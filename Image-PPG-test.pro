@@ -25,8 +25,11 @@ CONFIG += qwt
 LIBS +=-L"C:/Qt/4.8.6/lib" -lqwtd
 LIBS +=-L"C:/Qt/4.8.6/lib" -lqwt
 LIBS +=-L"C:/Qt/4.8.6/bin"
-
+#LIBS +=-L"D:\\qwt-6.0.1\\lib" -lqwtd
+#LIBS +=-L"D:\\qwt-6.0.1\\lib" -lqwt
 INCLUDEPATH +=C:/Qt/4.8.6/include/
 INCLUDEPATH +=C:/Qt/4.8.6/include/phonon
 INCLUDEPATH +=C:/Qt/4.8.6/bin/
+#INCLUDEPATH +=D:\\qwt-6.0.1\\src
+
 

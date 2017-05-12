@@ -23,8 +23,8 @@
 #define X_SIZE 640 //640*480 sequence
 #define Y_SIZE 480 //640*480 sequence
 int ONE_SIZE= X_SIZE* Y_SIZE;
-FILE *video_ptr;
-QImage *frame;
+//FILE *video_ptr;
+//QImage *frame;
 unsigned char y_color[480][640];
 //char *y_color = new char[10];
 unsigned char cb_img[240][320];
@@ -106,8 +106,6 @@ widget::widget(QWidget *parent) :
 
 
 
-
-
     //QFile file("new000.yuv");
     video_ptr = fopen("new000.yuv","rb");
     frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
@@ -150,36 +148,36 @@ widget::~widget()
     delete ui;
 }
 
-//void widget::paintEvent(QPaintEvent *)
-//{
-//    enable=1;
-//}
+void widget::paintEvent(QPaintEvent *)
+{
+    enable=1;
+}
 
-//void widget::cal_start(){
-//    //enable=1;
-//}
+void widget::cal_start(){
+    //enable=1;
+}
 
-//void widget::plotAdCurve(){
+void widget::plotAdCurve(){
 
-//    //enable=1;
-//    //readAdData(xData,yData);
-//    //p_adplot->setSamples(xData,yData);
+    //enable=1;
+    //readAdData(xData,yData);
+    //p_adplot->setSamples(xData,yData);
 
-//    //p_adplot->attach(ui->qwtPlot);
-//    //ui->qwtPlot->replot();
-//    //adPlotTimer->start(1000);
-//}
-
-
-//void widget::plotPSDCurve(){
+    //p_adplot->attach(ui->qwtPlot);
+    //ui->qwtPlot->replot();
+    //adPlotTimer->start(1000);
+}
 
 
+void widget::plotPSDCurve(){
 
-//    //readPSDData(uptimeData,ratioData);
-//    //p_psdplot->setSamples(uptimeData,ratioData);
 
-//    //p_psdplot->attach(ui->psdPlot);
-//    //ui->psdPlot->replot();
-//    //adPlotTimer->start(1000);
 
-//}
+    //readPSDData(uptimeData,ratioData);
+    //p_psdplot->setSamples(uptimeData,ratioData);
+
+    //p_psdplot->attach(ui->psdPlot);
+    //ui->psdPlot->replot();
+    //adPlotTimer->start(1000);
+
+}
