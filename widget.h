@@ -83,7 +83,7 @@ private:
 //   /* FILE *in_c;
 
 //    unsigned char *yuv_buffer_pointer;
-//    //unsigned char  yuv_buffer_pointer[640*480*3];
+    unsigned char  yuv_buffer_pointer[640*480*3];
 
 //    char Y_frame[640*480];
 //    char Cr_frame[240*320];

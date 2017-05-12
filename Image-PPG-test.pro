@@ -16,7 +16,12 @@ SOURCES += main.cpp \
     widget.cpp
 
 HEADERS  += widget.h \
-    common.h
+    common.h \
+    cal.h \
+    fir64.h \
+    resample.h \
+    R_peak.h \
+    PSD.h
 
 FORMS    += widget.ui
 

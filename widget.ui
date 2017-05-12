@@ -16,7 +16,7 @@
   <widget class="QLCDNumber" name="RRI_LCD">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>80</x>
      <y>550</y>
      <width>101</width>
      <height>51</height>
@@ -36,7 +36,7 @@
   <widget class="QLCDNumber" name="ration_LCD">
    <property name="geometry">
     <rect>
-     <x>420</x>
+     <x>430</x>
      <y>550</y>
      <width>71</width>
      <height>51</height>
@@ -99,6 +99,58 @@
    </property>
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="RRI">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>570</y>
+     <width>47</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>RRI</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>570</y>
+     <width>47</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>HR</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>570</y>
+     <width>47</width>
+     <height>12</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>LF/HF</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>30</y>
+     <width>471</width>
+     <height>451</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
    </property>
   </widget>
  </widget>
