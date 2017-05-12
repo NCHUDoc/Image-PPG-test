@@ -23,6 +23,10 @@ FORMS    += widget.ui
 DEFINES += QWT_DLL
 CONFIG += qwt
 LIBS +=-L"C:/Qt/4.8.6/lib" -lqwtd
-INCLUDEPATH +=C:/Qt/4.8.6/include/QtQwt
+LIBS +=-L"C:/Qt/4.8.6/lib" -lqwt
+LIBS +=-L"C:/Qt/4.8.6/bin"
+
+INCLUDEPATH +=C:/Qt/4.8.6/include/
 INCLUDEPATH +=C:/Qt/4.8.6/include/phonon
+INCLUDEPATH +=C:/Qt/4.8.6/bin/
 

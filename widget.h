@@ -22,7 +22,6 @@ class widget : public QWidget
 public:
     explicit widget(QWidget *parent = 0);
     ~widget();
-
 //    unsigned char rgb_buffer[640*480*3];
 //    unsigned char r_buffer[640*480];
 //    double show_buffer[30*5];
@@ -70,8 +69,8 @@ private:
     Ui::widget *ui;
 
 //    QImage *frame;
-//    QwtPlotCurve *p_adplot;
-//    QwtPlotCurve *p_psdplot;
+    QwtPlotCurve *p_adplot;
+    QwtPlotCurve *p_psdplot;
 //    int rs;
 //    unsigned int len;
 //    int convert_yuv_to_rgb_buffer();
@@ -91,8 +90,8 @@ private:
 //    char Cb_frame[240*320];
 
 //    int write420();
-//    QTimer *adPlotTimer;
-//    QTimer *psdPlotTimer;
+    QTimer *adPlotTimer;
+    QTimer *psdPlotTimer;
 
 
 //private slots:
