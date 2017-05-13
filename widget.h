@@ -23,18 +23,18 @@ public:
     explicit widget(QWidget *parent = 0);
     ~widget();
     unsigned char rgb_buffer[640*480*3];
-    unsigned char r_buffer[640*480];
+//    unsigned char r_buffer[640*480];
     double show_buffer[30*5];
-    double avg_buffer[30];
+//    double avg_buffer[30];
     double time_data[30*5];
-    double FIR_buffer[30*4];
-    double smooth_buffer[30*4];
-    double R_buffer[30*4];
-    double fir_out[30];
+//    double FIR_buffer[30*4];
+//    double smooth_buffer[30*4];
+//    double R_buffer[30*4];
+//    double fir_out[30];
     QVector< double > xData;
     QVector< double > yData;
-    QVector< double > uptimeData;
-    QVector< double > ratioData;
+//    QVector< double > uptimeData;
+//    QVector< double > ratioData;
 
     void readAdData(QVector<double> &xData,  QVector<double> &yData);
     void readPSDData(QVector<double> &uptimeData,  QVector<double> &ratioData);
@@ -50,17 +50,17 @@ public:
     double std(double in[],double avg,int len);
 
 
-    double wave30[30*60];
-    double wave256[256*60];
-    double RRI_a[150],RRI_b[fs*cal_time],rR_peak[150],RRI_c[fs*cal_time],freq[128],power[128];
-    double RRI_mean,ration;
+//    double wave30[30*60];
+//    double wave256[256*60];
+//    double RRI_a[150],RRI_b[fs*cal_time],rR_peak[150],RRI_c[fs*cal_time],freq[128],power[128];
+//    double RRI_mean,ration;
     int f_time,updata,HR,len_RRI_a,enable;
     //ADD******************************************************************************
-    int xxx ;
-    int top,led_uptime,GG,BB,RR;
-    double  ratio_reg[2000];
-    double  uptime_data[2000];
-    int     level_reg[2000];
+//    int xxx ;
+//    int top,led_uptime,GG,BB,RR;
+//    double  ratio_reg[2000];
+//    double  uptime_data[2000];
+//    int     level_reg[2000];
 
     //ADD******************************************************************************
 

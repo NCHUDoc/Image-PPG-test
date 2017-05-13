@@ -53,7 +53,7 @@ widget::widget(QWidget *parent) :
     ui(new Ui::widget)
 {
     ui->setupUi(this);
-    //***********************LCD***************************************
+//    //***********************LCD***************************************
         ui->RRI_LCD->setSegmentStyle(QLCDNumber::Flat);   // Show RRI value real time(Object LCD_Number)
         ui->RRI_LCD->display(0);
         ui->HR_LCD->setSegmentStyle(QLCDNumber::Flat);      // Show HR value real time(Object LCD_Number)
@@ -63,7 +63,7 @@ widget::widget(QWidget *parent) :
         connect(ui->pushButton_1,SIGNAL(clicked()), this,SLOT(cal_start()));    //  Start Button (Object push_button)
         connect(ui->pushButton_2,SIGNAL(clicked()), this,SLOT(close()));        //  Cllose Button (Object push_button)
 
-    //***********************wave***************************************************
+//    //***********************wave***************************************************
         ui->qwtPlot->setCanvasBackground( QColor(0,0,0));
         ui->qwtPlot->setAxisScale(QwtPlot::xBottom,0,30*5);
         ui->qwtPlot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
@@ -73,12 +73,12 @@ widget::widget(QWidget *parent) :
         p_adplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
         p_adplot->attach(ui->qwtPlot);
 
-        //time = 0.0;
+//        //time = 0.0;
 
         adPlotTimer = new QTimer();
         adPlotTimer->start();//1000
 
-        //connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
+        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
         QwtPlotGrid *grid = new QwtPlotGrid();
         grid->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
@@ -87,32 +87,32 @@ widget::widget(QWidget *parent) :
         grid->enableY(ui->qwtPlot);
         grid->enableYMin(ui->qwtPlot);
         grid->attach(ui->qwtPlot);
-        //*************************************************
-        //*********************psd*************************
+//        //*************************************************
+//        //*********************psd*************************
 
-        ui->psdPlot->setCanvasBackground( QColor(0,0,0));
-        ui->psdPlot->setAxisScale(QwtPlot::xBottom,0,500);
-        ui->psdPlot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
-        ui->psdPlot->setAxisScale(QwtPlot::yLeft,0,6);
-        ui->psdPlot->setAxisMaxMinor(QwtPlot::yLeft,0.2);
-        p_psdplot = new QwtPlotCurve();
-        p_psdplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
-        p_psdplot->attach(ui->psdPlot);
+//        ui->psdPlot->setCanvasBackground( QColor(0,0,0));
+//        ui->psdPlot->setAxisScale(QwtPlot::xBottom,0,500);
+//        ui->psdPlot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
+//        ui->psdPlot->setAxisScale(QwtPlot::yLeft,0,6);
+//        ui->psdPlot->setAxisMaxMinor(QwtPlot::yLeft,0.2);
+//        p_psdplot = new QwtPlotCurve();
+//        p_psdplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
+//        p_psdplot->attach(ui->psdPlot);
 
         //time = 0.0;
 
-        psdPlotTimer = new QTimer();
-        psdPlotTimer->start();//1000
+//        psdPlotTimer = new QTimer();
+//        psdPlotTimer->start();//1000
 
         //connect(psdPlotTimer, SIGNAL(timeout()),this, SLOT(plotPSDCurve()));
 
-        QwtPlotGrid *grid2 = new QwtPlotGrid();
-        grid2->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
-        grid2->enableX(ui->psdPlot);
-        grid2->enableXMin(ui->psdPlot);
-        grid2->enableY(ui->psdPlot);
-        grid2->enableYMin(ui->psdPlot);
-        grid2->attach(ui->psdPlot);
+//        QwtPlotGrid *grid2 = new QwtPlotGrid();
+//        grid2->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
+//        grid2->enableX(ui->psdPlot);
+//        grid2->enableXMin(ui->psdPlot);
+//        grid2->enableY(ui->psdPlot);
+//        grid2->enableYMin(ui->psdPlot);
+//        grid2->attach(ui->psdPlot);
 
 
 //    //QFile file("new000.yuv");
@@ -164,16 +164,19 @@ widget::~widget()
 
 void widget::paintEvent(QPaintEvent *)
 {
-    int i;
-    double t30 [cal_time*framerate],tRRI[fs*cal_time],sumRRI,meanRRI;
+      // Test paintEvent
+//      enable=0;
+      qDebug()<<"enable = "<<enable;
+//    int i;
+//    double t30 [cal_time*framerate],tRRI[fs*cal_time],sumRRI,meanRRI;
 
     int ONE_SIZE= X_SIZE* Y_SIZE;//640*480 sequence
 
 
-//    if(enable==1)
-//    {
+    if(enable==1)
+    {
 
-//        fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
+        fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
 //        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
 //        qDebug()<<"=================================";
 ////        ///////////////422-420
@@ -207,7 +210,7 @@ void widget::paintEvent(QPaintEvent *)
 ////                    yuv_buffer_pointer[(x+y*640)*4+3]=cr_img[y][x];
 ////                    yuv_buffer_pointer[(x+y*640)*4+640*2+3]=cr_img[y][x];
 ////                }
-//    }
+    }
 
 //    convert_yuv_to_rgb_buffer();
 
@@ -287,58 +290,58 @@ void widget::paintEvent(QPaintEvent *)
 /*yuv convert to rgb*/
 int widget::convert_yuv_to_rgb_buffer()
 {
-    unsigned long in, out = 0,g_out=0;
-    int y0, u, y1, v;
-    int r, g, b;
-    for(in = 0; in < X_SIZE* Y_SIZE*2; in += 4)
-    {
+//    unsigned long in, out = 0,g_out=0;
+//    int y0, u, y1, v;
+//    int r, g, b;
+//    for(in = 0; in < X_SIZE* Y_SIZE*2; in += 4)
+//    {
 
 
-        y0 = yuv_buffer_pointer[in + 0];
-        u  = yuv_buffer_pointer[in + 1];
-        y1 = yuv_buffer_pointer[in + 2];
-        v  = yuv_buffer_pointer[in + 3];
+//        y0 = yuv_buffer_pointer[in + 0];
+//        u  = yuv_buffer_pointer[in + 1];
+//        y1 = yuv_buffer_pointer[in + 2];
+//        v  = yuv_buffer_pointer[in + 3];
 
-        r = y0 + (1.370705 * (v-128));
-        g = y0 - (0.698001 * (v-128)) - (0.337633 * (u-128));
-        b = y0 + (1.732446 * (u-128)); //YUV420
+//        r = y0 + (1.370705 * (v-128));
+//        g = y0 - (0.698001 * (v-128)) - (0.337633 * (u-128));
+//        b = y0 + (1.732446 * (u-128)); //YUV420
 
-       /*  r = y0 + 1.042*(v-128);
-         g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
-         b = y0 + 1.772*(u-128);*/ // YUV422 
+//       /*  r = y0 + 1.042*(v-128);
+//         g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
+//         b = y0 + 1.772*(u-128);*/ // YUV422
 
-        if(r > 255) r = 255;
-        if(g > 255) g = 255;
-        if(b > 255) b = 255;
-        if(r < 0) r = 0;
-        if(g < 0) g = 0;
-        if(b < 0) b = 0;
-        rgb_buffer[out++] = r;
-        rgb_buffer[out++] = g;
-        rgb_buffer[out++] = b;
-        r_buffer[g_out++]= r;
+//        if(r > 255) r = 255;
+//        if(g > 255) g = 255;
+//        if(b > 255) b = 255;
+//        if(r < 0) r = 0;
+//        if(g < 0) g = 0;
+//        if(b < 0) b = 0;
+//        rgb_buffer[out++] = r;
+//        rgb_buffer[out++] = g;
+//        rgb_buffer[out++] = b;
+//        r_buffer[g_out++]= r;
 
-        r = y1 + (1.370705 * (v-128));
-        g = y1 - (0.698001 * (v-128)) - (0.337633 * (u-128));
-        b = y1 + (1.732446 * (u-128)); //YUV420
+//        r = y1 + (1.370705 * (v-128));
+//        g = y1 - (0.698001 * (v-128)) - (0.337633 * (u-128));
+//        b = y1 + (1.732446 * (u-128)); //YUV420
 
-       /* r = y0 + 1.042*(v-128);
-        g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
-        b = y0 + 1.772*(u-128);*/ // YUV422
+//       /* r = y0 + 1.042*(v-128);
+//        g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
+//        b = y0 + 1.772*(u-128);*/ // YUV422
 
-        if(r > 255) r = 255;
-        if(g > 255) g = 255;
-        if(b > 255) b = 255;
-        if(r < 0) r = 0;
-        if(g < 0) g = 0;
-        if(b < 0) b = 0;
-        rgb_buffer[out++] = r;
-        rgb_buffer[out++] = g;
-        rgb_buffer[out++] = b;
+//        if(r > 255) r = 255;
+//        if(g > 255) g = 255;
+//        if(b > 255) b = 255;
+//        if(r < 0) r = 0;
+//        if(g < 0) g = 0;
+//        if(b < 0) b = 0;
+//        rgb_buffer[out++] = r;
+//        rgb_buffer[out++] = g;
+//        rgb_buffer[out++] = b;
 
-        r_buffer[g_out++]= r;
+//        r_buffer[g_out++]= r;
 
-    }
+//    }
 
     return 0;
 }
@@ -366,33 +369,34 @@ void widget::plotAdCurve(){
 
     p_adplot->attach(ui->qwtPlot);
     ui->qwtPlot->replot();
-    //adPlotTimer->start(1000);
+    adPlotTimer->start(1000);
 }
 
 void widget::readPSDData(QVector< double > &uptimeData,  QVector<double> &ratioData){
     int i;
-    uptimeData.clear();
-    ratioData.clear();
+//    uptimeData.clear();
+//    ratioData.clear();
 
-    for(i=0;i<xxx;i++)
-    {
-        uptimeData.append(uptime_data[i]);
-        ratioData.append(ratio_reg[i]);
-    }
+//    for(i=0;i<xxx;i++)
+//    {
+//        uptimeData.append(uptime_data[i]);
+//        ratioData.append(ratio_reg[i]);
+//    }
 }
 
 
 void widget::plotPSDCurve(){
 
-    readPSDData(uptimeData,ratioData);
-    p_psdplot->setSamples(uptimeData,ratioData);
+//    readPSDData(uptimeData,ratioData);
+//    p_psdplot->setSamples(uptimeData,ratioData);
 
-    p_psdplot->attach(ui->psdPlot);
-    ui->psdPlot->replot();
-    //adPlotTimer->start(1000);
+//    p_psdplot->attach(ui->psdPlot);
+//    ui->psdPlot->replot();
+//    //adPlotTimer->start(1000);
 
 }
 
 void widget::cal_start(){
     enable=1;
+    qDebug()<<"enable = "<<enable;
 }
