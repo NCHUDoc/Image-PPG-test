@@ -167,7 +167,7 @@ void widget::paintEvent(QPaintEvent *)
 {
       // Test paintEvent
 //      enable=0;
-      qDebug()<<"enable = "<<enable;
+//      qDebug()<<"enable = "<<enable;
     int i;
     double t30 [cal_time*framerate],tRRI[fs*cal_time],sumRRI,meanRRI;
 
@@ -371,6 +371,7 @@ void widget::plotAdCurve(){
     p_adplot->attach(ui->qwtPlot);
     ui->qwtPlot->replot();
     adPlotTimer->start(1000);
+    qDebug()<<"adPlotTimer = "<<1000;
 }
 
 void widget::readPSDData(QVector< double > &uptimeData,  QVector<double> &ratioData){
@@ -399,5 +400,5 @@ void widget::plotPSDCurve(){
 
 void widget::cal_start(){
     enable=1;
-    qDebug()<<"enable = "<<enable;
+//    qDebug()<<"enable = "<<enable;
 }

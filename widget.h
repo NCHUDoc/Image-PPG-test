@@ -25,12 +25,12 @@ public:
 //    unsigned char rgb_buffer[640*480*3];
     unsigned char r_buffer[640*480];
     double show_buffer[30*5];
-//    double avg_buffer[30];
+    double avg_buffer[30];
     double time_data[30*5];
-//    double FIR_buffer[30*4];
-//    double smooth_buffer[30*4];
-//    double R_buffer[30*4];
-//    double fir_out[30];
+    double FIR_buffer[30*4];
+    double smooth_buffer[30*4];
+    double R_buffer[30*4];
+    double fir_out[30];
     QVector< double > xData;
     QVector< double > yData;
 //    QVector< double > uptimeData;

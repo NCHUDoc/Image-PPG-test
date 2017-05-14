@@ -17,72 +17,72 @@ void widget::rgb_average(int h_s,int h_e,int w_s,int w_e){
     double pixel;
     double s_mean,std_s;
 
-//    sum_r=0,sum_g=0,sum_b=0;
-//    avg_r=0,avg_g=0,avg_b=0;
-//    pixel=(h_e-h_s-10)*(w_e-w_s-10);
-//    //printf("h_s=%d h_e=%d w_s=%d w_e=%d\n",h_s,h_e,w_s,w_e);
+    sum_r=0,sum_g=0,sum_b=0;
+    avg_r=0,avg_g=0,avg_b=0;
+    pixel=(h_e-h_s-10)*(w_e-w_s-10);
+    //printf("h_s=%d h_e=%d w_s=%d w_e=%d\n",h_s,h_e,w_s,w_e);
 
-//    for(x=(h_s+5);x<(h_e+1-5);x=x+1)
-//    {
-//        for(y=(w_s+5);y<(w_e+1-5);y=y+1)
-//        {
-//            sum_r+= r_buffer[x*640+y];
-//        }
-//    }
-
-
-
-//    avg_r=sum_r/pixel;
-//    // printf("sum=%d avg=%f\n",sum_g,avg_r);
-
-//    if(counter==30)
-//    {
-//        updata=updata+1;
-//        //printf("%d \n",updata);
-//        f_time=f_time+1;
-//        s_mean=sum_avg/30;
-//        std_s=std(avg_buffer,s_mean,30);
-
-//        for(i=0;i<30;i++)
-//        {
-//        //printf("i=%d avg=%f mean=%f std_s=%f \n",i,avg_buffer[i],s_mean,std_s);
-//            if(std_s==0)
-//            {
-//                avg_buffer[i]=0;
-//                // avg_buffer[i]= (avg_buffer[i]-s_mean)/std_s;
-//            }
-//            else
-//            {
-//                avg_buffer[i]= (avg_buffer[i]-s_mean)/std_s;
-//            }
-//        //printf("i=%d avg=%f std_s=%f \n",i,avg_buffer[i],std_s);
-//        }
-
-//        memmove(R_buffer,R_buffer+30,sizeof(double)*30*3);
-//        memcpy(R_buffer+90,avg_buffer,sizeof(double)*30*1);
-
-//        smooth(R_buffer,smooth_buffer);
-//        FIR(smooth_buffer,fir_out);
-//        wave_show(fir_out);
-
-//        //****************move wave************************
-
-//        memmove(wave30,wave30+30,sizeof(double)*(cal_time*framerate-30));
-//        memcpy(wave30+cal_time*framerate-30,fir_out,sizeof(double)*30);
+    for(x=(h_s+5);x<(h_e+1-5);x=x+1)
+    {
+        for(y=(w_s+5);y<(w_e+1-5);y=y+1)
+        {
+            sum_r+= r_buffer[x*640+y];
+        }
+    }
 
 
 
-//        //********************************************
+    avg_r=sum_r/pixel;
+    // printf("sum=%d avg=%f\n",sum_g,avg_r);
 
-//        counter=0;
-//        sum_avg=0;
-//    }
-//    else
-//    {
-//        avg_buffer[counter]= avg_r;
-//        counter=counter+1;
-//        sum_avg+=avg_r;
-//    }
+    if(counter==30)
+    {
+        updata=updata+1;
+        //printf("%d \n",updata);
+        f_time=f_time+1;
+        s_mean=sum_avg/30;
+        std_s=std(avg_buffer,s_mean,30);
+
+        for(i=0;i<30;i++)
+        {
+        //printf("i=%d avg=%f mean=%f std_s=%f \n",i,avg_buffer[i],s_mean,std_s);
+            if(std_s==0)
+            {
+                avg_buffer[i]=0;
+                // avg_buffer[i]= (avg_buffer[i]-s_mean)/std_s;
+            }
+            else
+            {
+                avg_buffer[i]= (avg_buffer[i]-s_mean)/std_s;
+            }
+        //printf("i=%d avg=%f std_s=%f \n",i,avg_buffer[i],std_s);
+        }
+
+        memmove(R_buffer,R_buffer+30,sizeof(double)*30*3);
+        memcpy(R_buffer+90,avg_buffer,sizeof(double)*30*1);
+
+        smooth(R_buffer,smooth_buffer);
+        FIR(smooth_buffer,fir_out);
+        wave_show(fir_out);
+
+        //****************move wave************************
+
+        memmove(wave30,wave30+30,sizeof(double)*(cal_time*framerate-30));
+        memcpy(wave30+cal_time*framerate-30,fir_out,sizeof(double)*30);
+
+
+
+        //********************************************
+
+        counter=0;
+        sum_avg=0;
+    }
+    else
+    {
+        avg_buffer[counter]= avg_r;
+        counter=counter+1;
+        sum_avg+=avg_r;
+    }
        //printf("counter=%d avg=%f sum_avg=%f\n",counter,avg_buffer[counter],sum_avg);
 }
 
@@ -90,17 +90,17 @@ void widget::rgb_average(int h_s,int h_e,int w_s,int w_e){
 void widget::wave_show(double *fir_out){
     int i;
 
-//    for(i=0;i<120;i++)
-//    {
-//        show_buffer[i]= show_buffer[i+30];
-//        time_data[i]=i;
-//    }
-//    for(i=0;i<30;i++)
-//    {
-//        show_buffer[i+120]= fir_out[i];
-//        time_data[i+120]=i+120;
-//        //printf("i=%d avg=%f\n",i,avg_buffer[i]);
-//    }
+    for(i=0;i<120;i++)
+    {
+        show_buffer[i]= show_buffer[i+30];
+        time_data[i]=i;
+    }
+    for(i=0;i<30;i++)
+    {
+        show_buffer[i+120]= fir_out[i];
+        time_data[i+120]=i+120;
+        //printf("i=%d avg=%f\n",i,avg_buffer[i]);
+    }
 }
 
 // FIR filter
@@ -108,10 +108,10 @@ void widget::FIR(double *smooth_buffer,double *fir_out){
     int out_len;
     double fir_temp[55];
 
-//    memmove(FIR_buffer,FIR_buffer+30,sizeof(double)*30*3);
-//    memcpy(FIR_buffer+90,smooth_buffer,sizeof(double)*30);
-//    fir64(FIR_buffer, fir_temp, 120,out_len,65 );
-//    memcpy(fir_out,fir_temp+25,sizeof(double)*30);
+    memmove(FIR_buffer,FIR_buffer+30,sizeof(double)*30*3);
+    memcpy(FIR_buffer+90,smooth_buffer,sizeof(double)*30);
+    fir64(FIR_buffer, fir_temp, 120,out_len,65 );
+    memcpy(fir_out,fir_temp+25,sizeof(double)*30);
 
 }
 
