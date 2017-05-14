@@ -150,7 +150,8 @@ widget::widget(QWidget *parent) :
     //file.close();
     video_ptr = fopen("new000.yuv","rb");
     //video_ptr = fopen("C:/Users/User/git/Imag-PPG-test/zz05.yuv","rb");
-    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
+//    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
+    frame = new QImage(r_buffer,640,480,QImage::Format_RGB888);
     qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
     qDebug()<<"Read one byte from file new000.yuv: "<<video_ptr;
     qDebug()<<"=================================";
@@ -167,8 +168,8 @@ void widget::paintEvent(QPaintEvent *)
       // Test paintEvent
 //      enable=0;
       qDebug()<<"enable = "<<enable;
-//    int i;
-//    double t30 [cal_time*framerate],tRRI[fs*cal_time],sumRRI,meanRRI;
+    int i;
+    double t30 [cal_time*framerate],tRRI[fs*cal_time],sumRRI,meanRRI;
 
     int ONE_SIZE= X_SIZE* Y_SIZE;//640*480 sequence
 
@@ -212,71 +213,71 @@ void widget::paintEvent(QPaintEvent *)
 ////                }
     }
 
-//    convert_yuv_to_rgb_buffer();
+    convert_yuv_to_rgb_buffer();
 
-//    if(enable==1)
-//    {
-//            rgb_average(h_min,h_max,w_min,w_max);
-//            plotAdCurve();
+    if(enable==1)
+    {
+            rgb_average(h_min,h_max,w_min,w_max);
+            plotAdCurve();
 
-//            if(f_time>=cal_time){
-//                if(updata==updata_time ||updata==cal_time){
+            if(f_time>=cal_time){
+                if(updata==updata_time ||updata==cal_time){
 
-//                        updata=0;
-
-
-//                        memset(t30, 0, cal_time*framerate*sizeof(double));
-//                        for(i=0;i<cal_time*framerate;i++){
-//                            t30[i+1]= t30[i]+0.0333;//1/30=0.0333
-
-//                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
-//                        }
+                        updata=0;
 
 
-//                        resample(t30, wave30,wave256,0.0039,30*60,256*60);//1/256=0.0039
-//                        R_peak(wave256,RRI_a,rR_peak);
+                        memset(t30, 0, cal_time*framerate*sizeof(double));
+                        for(i=0;i<cal_time*framerate;i++){
+                            t30[i+1]= t30[i]+0.0333;//1/30=0.0333
 
-//                        memset(tRRI, 0, fs*cal_time*sizeof(double));
-//                        for(i=0;i<fs*cal_time;i++){
-//                            tRRI[i+1]= tRRI[i]+0.5;//0.5=1/fs
-//                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
-//                        }
-//                        int time_RRI_a=rR_peak[len_RRI_a]*fs-2;
-//                        resample(rR_peak, RRI_a,RRI_b,0.5,len_RRI_a,time_RRI_a);//1/2=0.5
-//                        for(i=0;i<time_RRI_a;i++){
-//                            sumRRI= sumRRI+RRI_b[i];
-//                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
-//                        }
-//                        meanRRI=sumRRI/time_RRI_a;   //zero mean
-//                        for(i=0;i<time_RRI_a;i++){
-//                            RRI_b[i]= RRI_b[i]-meanRRI;
-//                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
-//                        }
-//                        hannig(RRI_b,RRI_c,time_RRI_a); //Window function
-
-//                        PSD (RRI_c,128,60,freq,power);
-//                        //ADD******************************************************************************
-//                        uptime_data[xxx]=xxx;
-//                        xxx=xxx+1;
-//                        if(xxx>1999)
-//                        {  xxx=0;
-//                           led_uptime=0;
-//                        }
-//                        //ADD******************************************************************************
-//                        plotPSDCurve();
+                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
+                        }
 
 
-//                       // printf("time=%4f \n",rR_peak[len_RRI_a-3]);
+                        resample(t30, wave30,wave256,0.0039,30*60,256*60);//1/256=0.0039
+                        R_peak(wave256,RRI_a,rR_peak);
+
+                        memset(tRRI, 0, fs*cal_time*sizeof(double));
+                        for(i=0;i<fs*cal_time;i++){
+                            tRRI[i+1]= tRRI[i]+0.5;//0.5=1/fs
+                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
+                        }
+                        int time_RRI_a=rR_peak[len_RRI_a]*fs-2;
+                        resample(rR_peak, RRI_a,RRI_b,0.5,len_RRI_a,time_RRI_a);//1/2=0.5
+                        for(i=0;i<time_RRI_a;i++){
+                            sumRRI= sumRRI+RRI_b[i];
+                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
+                        }
+                        meanRRI=sumRRI/time_RRI_a;   //zero mean
+                        for(i=0;i<time_RRI_a;i++){
+                            RRI_b[i]= RRI_b[i]-meanRRI;
+                            //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
+                        }
+                        hannig(RRI_b,RRI_c,time_RRI_a); //Window function
+
+                        PSD (RRI_c,128,60,freq,power);
+                        //ADD******************************************************************************
+                        uptime_data[xxx]=xxx;
+                        xxx=xxx+1;
+                        if(xxx>1999)
+                        {  xxx=0;
+                           led_uptime=0;
+                        }
+                        //ADD******************************************************************************
+                        plotPSDCurve();
 
 
-//            }
+                       // printf("time=%4f \n",rR_peak[len_RRI_a-3]);
 
-//                ui->RRI_LCD->display(RRI_mean);
-//                ui->HR_LCD->display(HR);
-//                ui->ration_LCD->display(ration);
 
-//        }
-//    }
+            }
+
+                ui->RRI_LCD->display(RRI_mean);
+                ui->HR_LCD->display(HR);
+                ui->ration_LCD->display(ration);
+
+        }
+    }
 
 
 //    //Box();
@@ -290,59 +291,59 @@ void widget::paintEvent(QPaintEvent *)
 /*yuv convert to rgb*/
 int widget::convert_yuv_to_rgb_buffer()
 {
-//    unsigned long in, out = 0,g_out=0;
-//    int y0, u, y1, v;
-//    int r, g, b;
-//    for(in = 0; in < X_SIZE* Y_SIZE*2; in += 4)
-//    {
+    unsigned long in, out = 0,g_out=0;
+    int y0, u, y1, v;
+    int r, g, b;
+    for(in = 0; in < X_SIZE* Y_SIZE*2; in += 4)
+    {
 
 
-//        y0 = yuv_buffer_pointer[in + 0];
-//        u  = yuv_buffer_pointer[in + 1];
-//        y1 = yuv_buffer_pointer[in + 2];
-//        v  = yuv_buffer_pointer[in + 3];
+        y0 = yuv_buffer_pointer[in + 0];
+        u  = yuv_buffer_pointer[in + 1];
+        y1 = yuv_buffer_pointer[in + 2];
+        v  = yuv_buffer_pointer[in + 3];
 
-//        r = y0 + (1.370705 * (v-128));
-//        g = y0 - (0.698001 * (v-128)) - (0.337633 * (u-128));
-//        b = y0 + (1.732446 * (u-128)); //YUV420
+        r = y0 + (1.370705 * (v-128));
+        g = y0 - (0.698001 * (v-128)) - (0.337633 * (u-128));
+        b = y0 + (1.732446 * (u-128)); //YUV420
 
 //       /*  r = y0 + 1.042*(v-128);
 //         g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
 //         b = y0 + 1.772*(u-128);*/ // YUV422
 
-//        if(r > 255) r = 255;
-//        if(g > 255) g = 255;
-//        if(b > 255) b = 255;
-//        if(r < 0) r = 0;
-//        if(g < 0) g = 0;
-//        if(b < 0) b = 0;
+        if(r > 255) r = 255;
+        if(g > 255) g = 255;
+        if(b > 255) b = 255;
+        if(r < 0) r = 0;
+        if(g < 0) g = 0;
+        if(b < 0) b = 0;
 //        rgb_buffer[out++] = r;
 //        rgb_buffer[out++] = g;
 //        rgb_buffer[out++] = b;
-//        r_buffer[g_out++]= r;
+        r_buffer[g_out++]= r;
 
-//        r = y1 + (1.370705 * (v-128));
-//        g = y1 - (0.698001 * (v-128)) - (0.337633 * (u-128));
-//        b = y1 + (1.732446 * (u-128)); //YUV420
+        r = y1 + (1.370705 * (v-128));
+        g = y1 - (0.698001 * (v-128)) - (0.337633 * (u-128));
+        b = y1 + (1.732446 * (u-128)); //YUV420
 
 //       /* r = y0 + 1.042*(v-128);
 //        g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
 //        b = y0 + 1.772*(u-128);*/ // YUV422
 
-//        if(r > 255) r = 255;
-//        if(g > 255) g = 255;
-//        if(b > 255) b = 255;
-//        if(r < 0) r = 0;
-//        if(g < 0) g = 0;
-//        if(b < 0) b = 0;
+        if(r > 255) r = 255;
+        if(g > 255) g = 255;
+        if(b > 255) b = 255;
+        if(r < 0) r = 0;
+        if(g < 0) g = 0;
+        if(b < 0) b = 0;
 //        rgb_buffer[out++] = r;
 //        rgb_buffer[out++] = g;
 //        rgb_buffer[out++] = b;
 
-//        r_buffer[g_out++]= r;
+        r_buffer[g_out++]= r;
 
-//    }
-
+    }
+    qDebug()<<"rgb(r)"<< r;
     return 0;
 }
 
