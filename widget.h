@@ -38,7 +38,8 @@ public:
 
     void readAdData(QVector<double> &xData,  QVector<double> &yData);
     void readPSDData(QVector<double> &uptimeData,  QVector<double> &ratioData);
-    void rgb_average(int h_s,int h_e,int w_s,int w_e);
+//    void rgb_average(int h_s,int h_e,int w_s,int w_e);
+    void rgb_average();
     void smooth(double*,double*);
     void wave_show(double*);
     void FIR(double*,double*);

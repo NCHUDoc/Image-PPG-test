@@ -182,36 +182,36 @@ void widget::paintEvent(QPaintEvent *)
 //        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
 //        qDebug()<<"=================================";
         ///////////////422-420
-        for(int y=0;y<480;y++)
-            for(int x=0;x<640;x++)
-                y_color[y][x]=yuv_buffer_pointer[2*(x+y*640)];
+//        for(int y=0;y<480;y++)
+//            for(int x=0;x<640;x++)
+//                y_color[y][x]=yuv_buffer_pointer[2*(x+y*640)];
 
-        for(int y=0;y<240;y++,y++)
-            for(int x=0;x<320;x++,x++)
-            {
-                cb_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+1];
-                cr_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+3];
-            }
+//        for(int y=0;y<240;y++,y++)
+//            for(int x=0;x<320;x++,x++)
+//            {
+//                cb_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+1];
+//                cr_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+3];
+//            }
 
 
-        ////////////////////face detect
-        drowsydetect(&y_color[0][0],&cb_img[0][0],&cr_img[0][0],&h_max,&h_min,&w_max,&w_min);
+//        //======face detect=======//
+//        drowsydetect(&y_color[0][0],&cb_img[0][0],&cr_img[0][0],&h_max,&h_min,&w_max,&w_min);
 
-            //printf("h_1=%d h_2=%d w_1=%d w_2=%d\n",h_max,h_max,w_max,w_max);
+//            //printf("h_1=%d h_2=%d w_1=%d w_2=%d\n",h_max,h_max,w_max,w_max);
 
-        //////////////420-422
-        for(int y=0;y<480;y++)
-            for(int x=0;x<640;x++)
-                yuv_buffer_pointer[2*(x+y*640)]=y_color[y][x];
+//        //////////////420-422
+//        for(int y=0;y<480;y++)
+//            for(int x=0;x<640;x++)
+//                yuv_buffer_pointer[2*(x+y*640)]=y_color[y][x];
 
-            for(int y=0;y<240;y++,y++)
-                for(int x=0;x<320;x++,x++)
-                {
-                    yuv_buffer_pointer[(x+y*640)*4+1]=cb_img[y][x];
-                    yuv_buffer_pointer[(x+y*640)*4+640*2+1]=cb_img[y][x];
-                    yuv_buffer_pointer[(x+y*640)*4+3]=cr_img[y][x];
-                    yuv_buffer_pointer[(x+y*640)*4+640*2+3]=cr_img[y][x];
-                }
+//            for(int y=0;y<240;y++,y++)
+//                for(int x=0;x<320;x++,x++)
+//                {
+//                    yuv_buffer_pointer[(x+y*640)*4+1]=cb_img[y][x];
+//                    yuv_buffer_pointer[(x+y*640)*4+640*2+1]=cb_img[y][x];
+//                    yuv_buffer_pointer[(x+y*640)*4+3]=cr_img[y][x];
+//                    yuv_buffer_pointer[(x+y*640)*4+640*2+3]=cr_img[y][x];
+//                }
     }
 
     convert_yuv_to_rgb_buffer();
@@ -219,7 +219,8 @@ void widget::paintEvent(QPaintEvent *)
     if(enable==1)
     {
 //            qDebug()<<"rgb_average";
-            rgb_average(h_min,h_max,w_min,w_max);
+//            rgb_average(h_min,h_max,w_min,w_max);
+            rgb_average();
             plotAdCurve();
 
             if(f_time>=cal_time){
@@ -324,7 +325,6 @@ int widget::convert_yuv_to_rgb_buffer()
 //        rgb_buffer[out++] = g;
 //        rgb_buffer[out++] = b;
         r_buffer[g_out++]= r;
-
         r = y1 + (1.370705 * (v-128));
         g = y1 - (0.698001 * (v-128)) - (0.337633 * (u-128));
         b = y1 + (1.732446 * (u-128)); //YUV420
@@ -347,6 +347,7 @@ int widget::convert_yuv_to_rgb_buffer()
 
     }
     qDebug()<<"rgb(r)"<< r;
+    qDebug()<<"r_buffer[g_out-1]"<< r_buffer[g_out-1];
     return 0;
 }
 

@@ -10,7 +10,8 @@ double sum_avg=0;
 //void fir64(double *in,int in_len,double *out,int out_len);
 
 // rgb average function
-void widget::rgb_average(int h_s,int h_e,int w_s,int w_e){
+//void widget::rgb_average(int h_s,int h_e,int w_s,int w_e){
+void widget::rgb_average(){
     int x,y,i;
     int sum_r,sum_g,sum_b;
     double avg_r,avg_g,avg_b;
@@ -19,21 +20,28 @@ void widget::rgb_average(int h_s,int h_e,int w_s,int w_e){
 
     sum_r=0,sum_g=0,sum_b=0;
     avg_r=0,avg_g=0,avg_b=0;
-    pixel=(h_e-h_s-10)*(w_e-w_s-10);
+//    pixel=(h_e-h_s-10)*(w_e-w_s-10);
 //    printf("h_s=%d h_e=%d w_s=%d w_e=%d\n",h_s,h_e,w_s,w_e);
+    pixel=(b_x2-b_x1)*(b_y2-b_y1);
+//    for(x=(h_s+5);x<(h_e+1-5);x=x+1)
+//    {
+//        for(y=(w_s+5);y<(w_e+1-5);y=y+1)
+//        {
+//            sum_r+= r_buffer[x*640+y];
+//        }
+//    }
 
-    for(x=(h_s+5);x<(h_e+1-5);x=x+1)
-    {
-        for(y=(w_s+5);y<(w_e+1-5);y=y+1)
-        {
-            sum_r+= r_buffer[x*640+y];
-        }
-    }
+    for(x=(b_x1);x<(b_x2+1);x=x+1)
+           {
+                   for(y=(b_y1);y<(b_y2+1);y=y+1)
+                   {
+                      sum_r+= r_buffer[x*640+y];
+                    }
 
-
+            }
 
     avg_r=sum_r/pixel;
-    // printf("sum=%d avg=%f\n",sum_g,avg_r);
+//     printf("sum=%d avg=%f\n",sum_r,avg_r);
 
     if(counter==30)
     {
