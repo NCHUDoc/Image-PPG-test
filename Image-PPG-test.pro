@@ -21,7 +21,8 @@ HEADERS  += widget.h \
     fir64.h \
     resample.h \
     R_peak.h \
-    PSD.h
+    PSD.h \
+    Mainqtreal.h
 
 FORMS    += widget.ui
 

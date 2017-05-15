@@ -4,6 +4,7 @@
 #include "resample.h"
 #include "R_peak.h"
 #include "PSD.h"
+#include "Mainqtreal.h"
 #include <QImage>
 #include <QIODevice>
 #include <QFile>
@@ -39,10 +40,10 @@
 //int ONE_SIZE= X_SIZE* Y_SIZE;
 ////FILE *video_ptr;
 ////QImage *frame;
-//unsigned char y_color[480][640];
-////char *y_color = new char[10];
-//unsigned char cb_img[240][320];
-//unsigned char cr_img[240][320];
+unsigned char y_color[480][640];
+//char *y_color = new char[10];
+unsigned char cb_img[240][320];
+unsigned char cr_img[240][320];
 //unsigned char rgb_buffer[640*480*3];
 //unsigned char  yuv_buffer_pointer[640*480*3];
 //qint8 enable;
@@ -78,7 +79,7 @@ widget::widget(QWidget *parent) :
         adPlotTimer = new QTimer();
         adPlotTimer->start();//1000
 
-        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
+//        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
         QwtPlotGrid *grid = new QwtPlotGrid();
         grid->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
@@ -180,43 +181,44 @@ void widget::paintEvent(QPaintEvent *)
         fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
 //        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
 //        qDebug()<<"=================================";
-////        ///////////////422-420
-////        for(int y=0;y<480;y++)
-////            for(int x=0;x<640;x++)
-////                y_color[y][x]=yuv_buffer_pointer[2*(x+y*640)];
+        ///////////////422-420
+        for(int y=0;y<480;y++)
+            for(int x=0;x<640;x++)
+                y_color[y][x]=yuv_buffer_pointer[2*(x+y*640)];
 
-////        for(int y=0;y<240;y++,y++)
-////            for(int x=0;x<320;x++,x++)
-////            {
-////                cb_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+1];
-////                cr_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+3];
-////            }
+        for(int y=0;y<240;y++,y++)
+            for(int x=0;x<320;x++,x++)
+            {
+                cb_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+1];
+                cr_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+3];
+            }
 
 
-////        ////////////////////face detect
-////        drowsydetect(&y_color[0][0],&cb_img[0][0],&cr_img[0][0],&h_max,&h_min,&w_max,&w_min);
+        ////////////////////face detect
+        drowsydetect(&y_color[0][0],&cb_img[0][0],&cr_img[0][0],&h_max,&h_min,&w_max,&w_min);
 
-////            //printf("h_1=%d h_2=%d w_1=%d w_2=%d\n",h_max,h_max,w_max,w_max);
+            //printf("h_1=%d h_2=%d w_1=%d w_2=%d\n",h_max,h_max,w_max,w_max);
 
-////        //////////////420-422
-////        for(int y=0;y<480;y++)
-////            for(int x=0;x<640;x++)
-////                yuv_buffer_pointer[2*(x+y*640)]=y_color[y][x];
+        //////////////420-422
+        for(int y=0;y<480;y++)
+            for(int x=0;x<640;x++)
+                yuv_buffer_pointer[2*(x+y*640)]=y_color[y][x];
 
-////            for(int y=0;y<240;y++,y++)
-////                for(int x=0;x<320;x++,x++)
-////                {
-////                    yuv_buffer_pointer[(x+y*640)*4+1]=cb_img[y][x];
-////                    yuv_buffer_pointer[(x+y*640)*4+640*2+1]=cb_img[y][x];
-////                    yuv_buffer_pointer[(x+y*640)*4+3]=cr_img[y][x];
-////                    yuv_buffer_pointer[(x+y*640)*4+640*2+3]=cr_img[y][x];
-////                }
+            for(int y=0;y<240;y++,y++)
+                for(int x=0;x<320;x++,x++)
+                {
+                    yuv_buffer_pointer[(x+y*640)*4+1]=cb_img[y][x];
+                    yuv_buffer_pointer[(x+y*640)*4+640*2+1]=cb_img[y][x];
+                    yuv_buffer_pointer[(x+y*640)*4+3]=cr_img[y][x];
+                    yuv_buffer_pointer[(x+y*640)*4+640*2+3]=cr_img[y][x];
+                }
     }
 
     convert_yuv_to_rgb_buffer();
 
     if(enable==1)
     {
+//            qDebug()<<"rgb_average";
             rgb_average(h_min,h_max,w_min,w_max);
             plotAdCurve();
 
@@ -291,7 +293,8 @@ void widget::paintEvent(QPaintEvent *)
 /*yuv convert to rgb*/
 int widget::convert_yuv_to_rgb_buffer()
 {
-    unsigned long in, out = 0,g_out=0;
+//    unsigned long in, out = 0,g_out=0;
+    int in, out = 0,g_out=0;
     int y0, u, y1, v;
     int r, g, b;
     for(in = 0; in < X_SIZE* Y_SIZE*2; in += 4)

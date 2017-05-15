@@ -20,7 +20,7 @@ void widget::rgb_average(int h_s,int h_e,int w_s,int w_e){
     sum_r=0,sum_g=0,sum_b=0;
     avg_r=0,avg_g=0,avg_b=0;
     pixel=(h_e-h_s-10)*(w_e-w_s-10);
-    //printf("h_s=%d h_e=%d w_s=%d w_e=%d\n",h_s,h_e,w_s,w_e);
+//    printf("h_s=%d h_e=%d w_s=%d w_e=%d\n",h_s,h_e,w_s,w_e);
 
     for(x=(h_s+5);x<(h_e+1-5);x=x+1)
     {
@@ -121,13 +121,13 @@ double widget::std(double in[],double avg,int len){
     double out,temp,sum;
     sum=0;
 
-//    for(i=0;i<len;i++)
-//    {
-//        temp=in[i]-avg;
-//        temp *=temp;
-//        sum += temp;
-//    }
-//    out=sqrt(sum/len);
+    for(i=0;i<len;i++)
+    {
+        temp=in[i]-avg;
+        temp *=temp;
+        sum += temp;
+    }
+    out=sqrt(sum/len);
     return out;
 }
 
@@ -136,28 +136,28 @@ void widget::smooth(double *R_buffer,double *smooth_buffer){
     int i,j,s=5,k;
     double sum;
 
-//    k=s/2+1;
+    k=s/2+1;
 
-//    for(i=0;i<30*4;i++)
-//    {
-//        sum=0;
+    for(i=0;i<30*4;i++)
+    {
+        sum=0;
 
-//        if( i>k  && 30*4-k>i )
-//        {
-//            for(j=0;j<s;j++)
-//            {
-//                sum+=R_buffer[i-k+1+j];
-//            }
-//            smooth_buffer[i]=sum/s;
+        if( i>k  && 30*4-k>i )
+        {
+            for(j=0;j<s;j++)
+            {
+                sum+=R_buffer[i-k+1+j];
+            }
+            smooth_buffer[i]=sum/s;
 
-//        }
-//        else
-//        {
-//            smooth_buffer[i]=R_buffer[i];
-//        }
+        }
+        else
+        {
+            smooth_buffer[i]=R_buffer[i];
+        }
 
-//        //printf("i=%d avg=%f\n",i,avg_buffer[i]);
-//    }
+        //printf("i=%d avg=%f\n",i,avg_buffer[i]);
+    }
 }
 
 // hanning window
@@ -165,27 +165,27 @@ void widget::hannig(double *in,double *out,int len){
     //	int fs=2;
     //	int cal_time=300;
 
-//    double ang,hann;
-//    int k,i;
+    double ang,hann;
+    int k,i;
 
 ////==================== hannig window ================================
 
-//    for(k=0;k<len;k++)
-//    { // double yyi=yi[k];
-//        ang = cos(((6.28*k)/len));
-//        hann=0.5-0.5*ang;//0.5*(1-cos(2*))
-//        out[k] = in[k]*hann;
-//        //printf("%f\n",yi[k]);
-//        //printf("%d %.4f %.4f %4f \n",k,ang,hann,in[k]);
-//    }
+    for(k=0;k<len;k++)
+    { // double yyi=yi[k];
+        ang = cos(((6.28*k)/len));
+        hann=0.5-0.5*ang;//0.5*(1-cos(2*))
+        out[k] = in[k]*hann;
+        //printf("%f\n",yi[k]);
+        //printf("%d %.4f %.4f %4f \n",k,ang,hann,in[k]);
+    }
 
-//    if(k<nfft)
-//    {
-//      for(i=k;i<nfft;i++)
-//      {
-//           out[i]=0;
-//      }
-//  }
+    if(k<nfft)
+    {
+      for(i=k;i<nfft;i++)
+      {
+           out[i]=0;
+      }
+  }
 
 }
 
