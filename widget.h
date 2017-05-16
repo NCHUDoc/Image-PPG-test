@@ -33,8 +33,8 @@ public:
     double fir_out[30];
     QVector< double > xData;
     QVector< double > yData;
-//    QVector< double > uptimeData;
-//    QVector< double > ratioData;
+    QVector< double > uptimeData;
+    QVector< double > ratioData;
 
     void readAdData(QVector<double> &xData,  QVector<double> &yData);
     void readPSDData(QVector<double> &uptimeData,  QVector<double> &ratioData);

@@ -48,6 +48,7 @@ void widget::rgb_average(){
         updata=updata+1;
         //printf("%d \n",updata);
         f_time=f_time+1;
+        qDebug()<<"f_time"<< f_time;
         s_mean=sum_avg/30;
         std_s=std(avg_buffer,s_mean,30);
 
@@ -78,7 +79,7 @@ void widget::rgb_average(){
         memmove(wave30,wave30+30,sizeof(double)*(cal_time*framerate-30));
         memcpy(wave30+cal_time*framerate-30,fir_out,sizeof(double)*30);
 	 
-        qDebug()<<"R_buffer"<< R_buffer[0];
+        //qDebug()<<"R_buffer"<< R_buffer[0];
 
 
         //********************************************

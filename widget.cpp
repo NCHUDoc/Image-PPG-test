@@ -76,8 +76,8 @@ widget::widget(QWidget *parent) :
 
 //        //time = 0.0;
 
-        adPlotTimer = new QTimer();
-        adPlotTimer->start(1000);//1000
+//        adPlotTimer = new QTimer();
+//        adPlotTimer->start(1000);//1000
 
 //        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
@@ -88,32 +88,32 @@ widget::widget(QWidget *parent) :
         grid->enableY(ui->qwtPlot);
         grid->enableYMin(ui->qwtPlot);
         grid->attach(ui->qwtPlot);
-//        //*************************************************
-//        //*********************psd*************************
+        //*************************************************
+        //*********************psd*************************
 
-//        ui->psdPlot->setCanvasBackground( QColor(0,0,0));
-//        ui->psdPlot->setAxisScale(QwtPlot::xBottom,0,500);
-//        ui->psdPlot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
-//        ui->psdPlot->setAxisScale(QwtPlot::yLeft,0,6);
-//        ui->psdPlot->setAxisMaxMinor(QwtPlot::yLeft,0.2);
-//        p_psdplot = new QwtPlotCurve();
-//        p_psdplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
-//        p_psdplot->attach(ui->psdPlot);
+        ui->psdPlot->setCanvasBackground( QColor(0,0,0));
+        ui->psdPlot->setAxisScale(QwtPlot::xBottom,0,500);
+        ui->psdPlot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
+        ui->psdPlot->setAxisScale(QwtPlot::yLeft,0,6);
+        ui->psdPlot->setAxisMaxMinor(QwtPlot::yLeft,0.2);
+        p_psdplot = new QwtPlotCurve();
+        p_psdplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
+        p_psdplot->attach(ui->psdPlot);
 
-        //time = 0.0;
+//        time = 0.0;
 
 //        psdPlotTimer = new QTimer();
 //        psdPlotTimer->start();//1000
 
-        //connect(psdPlotTimer, SIGNAL(timeout()),this, SLOT(plotPSDCurve()));
+//        connect(psdPlotTimer, SIGNAL(timeout()),this, SLOT(plotPSDCurve()));
 
-//        QwtPlotGrid *grid2 = new QwtPlotGrid();
-//        grid2->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
-//        grid2->enableX(ui->psdPlot);
-//        grid2->enableXMin(ui->psdPlot);
-//        grid2->enableY(ui->psdPlot);
-//        grid2->enableYMin(ui->psdPlot);
-//        grid2->attach(ui->psdPlot);
+        QwtPlotGrid *grid2 = new QwtPlotGrid();
+        grid2->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
+        grid2->enableX(ui->psdPlot);
+        grid2->enableXMin(ui->psdPlot);
+        grid2->enableY(ui->psdPlot);
+        grid2->enableYMin(ui->psdPlot);
+        grid2->attach(ui->psdPlot);
 
 
 //    //QFile file("new000.yuv");
@@ -149,12 +149,12 @@ widget::widget(QWidget *parent) :
 //    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][4];
 //    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][5];
     //file.close();
-    video_ptr = fopen("new000.yuv","rb");
+    video_ptr = fopen("zz05.yuv","rb");
     //video_ptr = fopen("C:/Users/User/git/Imag-PPG-test/zz05.yuv","rb");
 //    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
     frame = new QImage(r_buffer,640,480,QImage::Format_RGB888);
     qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
-    qDebug()<<"Read one byte from file new000.yuv: "<<video_ptr;
+    qDebug()<<"Read one byte from file zz05.yuv: "<<video_ptr;
     qDebug()<<"=================================";
 
 }
@@ -382,25 +382,25 @@ void widget::plotAdCurve(){
 
 void widget::readPSDData(QVector< double > &uptimeData,  QVector<double> &ratioData){
     int i;
-//    uptimeData.clear();
-//    ratioData.clear();
+    uptimeData.clear();
+    ratioData.clear();
 
-//    for(i=0;i<xxx;i++)
-//    {
-//        uptimeData.append(uptime_data[i]);
-//        ratioData.append(ratio_reg[i]);
-//    }
+    for(i=0;i<xxx;i++)
+    {
+        uptimeData.append(uptime_data[i]);
+        ratioData.append(ratio_reg[i]);
+    }
 }
 
 
 void widget::plotPSDCurve(){
 
-//    readPSDData(uptimeData,ratioData);
-//    p_psdplot->setSamples(uptimeData,ratioData);
+    readPSDData(uptimeData,ratioData);
+    p_psdplot->setSamples(uptimeData,ratioData);
 
-//    p_psdplot->attach(ui->psdPlot);
-//    ui->psdPlot->replot();
-//    //adPlotTimer->start(1000);
+    p_psdplot->attach(ui->psdPlot);
+    ui->psdPlot->replot();
+    //adPlotTimer->start(1000);
 
 }
 
