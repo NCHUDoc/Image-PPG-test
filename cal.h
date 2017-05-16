@@ -68,7 +68,7 @@ void widget::rgb_average(){
 
         memmove(R_buffer,R_buffer+30,sizeof(double)*30*3);
         memcpy(R_buffer+90,avg_buffer,sizeof(double)*30*1);
-
+        
         smooth(R_buffer,smooth_buffer);
         FIR(smooth_buffer,fir_out);
         wave_show(fir_out);
@@ -78,7 +78,7 @@ void widget::rgb_average(){
         memmove(wave30,wave30+30,sizeof(double)*(cal_time*framerate-30));
         memcpy(wave30+cal_time*framerate-30,fir_out,sizeof(double)*30);
 
-
+		qDebug()<<"R_buffer"<<R_buffer[0];
 
         //********************************************
 
@@ -90,6 +90,9 @@ void widget::rgb_average(){
         avg_buffer[counter]= avg_r;
         counter=counter+1;
         sum_avg+=avg_r;
+//        qDebug()<<"avg_buffer"<<avg_r;
+//        qDebug()<<"counter"<<counter;
+//        qDebug()<<"sum_avg"<<sum_avg;
     }
        //printf("counter=%d avg=%f sum_avg=%f\n",counter,avg_buffer[counter],sum_avg);
 }

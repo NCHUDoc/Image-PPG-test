@@ -48,6 +48,7 @@ unsigned char cr_img[240][320];
 //unsigned char  yuv_buffer_pointer[640*480*3];
 //qint8 enable;
 int w_max,w_min,h_max,h_min;
+qint8 countpaintevent=0;
 
 widget::widget(QWidget *parent) :
     QWidget(parent),
@@ -79,7 +80,7 @@ widget::widget(QWidget *parent) :
         adPlotTimer = new QTimer();
         adPlotTimer->start();//1000
 
-//        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
+        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
         QwtPlotGrid *grid = new QwtPlotGrid();
         grid->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
@@ -153,9 +154,9 @@ widget::widget(QWidget *parent) :
     //video_ptr = fopen("C:/Users/User/git/Imag-PPG-test/zz05.yuv","rb");
 //    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
     frame = new QImage(r_buffer,640,480,QImage::Format_RGB888);
-    qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
-    qDebug()<<"Read one byte from file new000.yuv: "<<video_ptr;
-    qDebug()<<"=================================";
+    //qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
+    //qDebug()<<"Read one byte from file new000.yuv: "<<video_ptr;
+    //qDebug()<<"=================================";
 
 }
 
@@ -174,12 +175,9 @@ void widget::paintEvent(QPaintEvent *)
 
     int ONE_SIZE= X_SIZE* Y_SIZE;//640*480 sequence
 
-
-    if(enable==1)
-    {
-
-        fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
-//        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
+    fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
+//        qDebug()<<">>widget::paintEvent(QPaintEvent *)"<<countpaintevent;
+//        countpaintevent++;
 //        qDebug()<<"=================================";
         ///////////////422-420
 //        for(int y=0;y<480;y++)
@@ -212,7 +210,6 @@ void widget::paintEvent(QPaintEvent *)
 //                    yuv_buffer_pointer[(x+y*640)*4+3]=cr_img[y][x];
 //                    yuv_buffer_pointer[(x+y*640)*4+640*2+3]=cr_img[y][x];
 //                }
-    }
 
     convert_yuv_to_rgb_buffer();
 
@@ -346,8 +343,8 @@ int widget::convert_yuv_to_rgb_buffer()
         r_buffer[g_out++]= r;
 
     }
-    qDebug()<<"rgb(r)"<< r;
-    qDebug()<<"r_buffer[g_out-1]"<< r_buffer[g_out-1];
+//    qDebug()<<"rgb(r)"<< r;
+    //qDebug()<<"r_buffer[g_out-1]"<< r_buffer[g_out-1];
     return 0;
 }
 
@@ -374,8 +371,8 @@ void widget::plotAdCurve(){
 
     p_adplot->attach(ui->qwtPlot);
     ui->qwtPlot->replot();
-    adPlotTimer->start(1000);
-    qDebug()<<"adPlotTimer = "<<1000;
+    //adPlotTimer->start(1000);
+    //qDebug()<<"adPlotTimer = "<<1000;
 }
 
 void widget::readPSDData(QVector< double > &uptimeData,  QVector<double> &ratioData){

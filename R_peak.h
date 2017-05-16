@@ -141,7 +141,7 @@ void widget::R_peak (double *wave,double *RRI_a,double *rR_peak ){
 
     RRI_mean = rR_peak[i]/(len_RRI_a);
     HR = 60/RRI_mean;
-    //printf(" RRI_mean= %f HR%d  \n", RRI_mean,HR);
+    printf(" RRI_mean= %f HR%d  \n", RRI_mean,HR);
 }
 
 
