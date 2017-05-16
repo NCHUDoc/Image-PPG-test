@@ -77,7 +77,8 @@ void widget::rgb_average(){
 
         memmove(wave30,wave30+30,sizeof(double)*(cal_time*framerate-30));
         memcpy(wave30+cal_time*framerate-30,fir_out,sizeof(double)*30);
-
+	 
+        qDebug()<<"R_buffer"<< R_buffer[0];
 
 
         //********************************************

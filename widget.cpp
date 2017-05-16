@@ -77,7 +77,7 @@ widget::widget(QWidget *parent) :
 //        //time = 0.0;
 
         adPlotTimer = new QTimer();
-        adPlotTimer->start();//1000
+        adPlotTimer->start(1000);//1000
 
 //        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
@@ -288,6 +288,8 @@ void widget::paintEvent(QPaintEvent *)
 //    ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
 
  //   rs = vd->unget_frame();
+    // Add for paintevent update timer - Mingfan 20170516
+    this->update();
 }
 
 
@@ -346,8 +348,8 @@ int widget::convert_yuv_to_rgb_buffer()
         r_buffer[g_out++]= r;
 
     }
-    qDebug()<<"rgb(r)"<< r;
-    qDebug()<<"r_buffer[g_out-1]"<< r_buffer[g_out-1];
+//    qDebug()<<"rgb(r)"<< r;
+//    qDebug()<<"r_buffer[g_out-1]"<< r_buffer[g_out-1];
     return 0;
 }
 
@@ -374,8 +376,8 @@ void widget::plotAdCurve(){
 
     p_adplot->attach(ui->qwtPlot);
     ui->qwtPlot->replot();
-    adPlotTimer->start(1000);
-    qDebug()<<"adPlotTimer = "<<1000;
+//    adPlotTimer->start(1000);
+//    qDebug()<<"adPlotTimer = "<<1000;
 }
 
 void widget::readPSDData(QVector< double > &uptimeData,  QVector<double> &ratioData){
