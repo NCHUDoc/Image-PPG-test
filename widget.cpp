@@ -76,8 +76,8 @@ widget::widget(QWidget *parent) :
 
 //        //time = 0.0;
 
-//        adPlotTimer = new QTimer();
-//        adPlotTimer->start(1000);//1000
+        adPlotTimer = new QTimer();
+        adPlotTimer->start(1000);//1000
 
 //        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
@@ -152,7 +152,7 @@ widget::widget(QWidget *parent) :
     video_ptr = fopen("zz05.yuv","rb");
     //video_ptr = fopen("C:/Users/User/git/Imag-PPG-test/zz05.yuv","rb");
 //    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
-    frame = new QImage(r_buffer,640,480,QImage::Format_RGB888);
+    frame = new QImage(r_buffer,640,480,QImage::Format_Indexed8);
     qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
     qDebug()<<"Read one byte from file zz05.yuv: "<<video_ptr;
     qDebug()<<"=================================";
@@ -285,7 +285,8 @@ void widget::paintEvent(QPaintEvent *)
 
 //    //Box();
 //    frame->loadFromData(rgb_buffer,640 * 480 * 3);
-//    ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
+    frame->loadFromData(r_buffer,640 * 480 );
+    ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
 
  //   rs = vd->unget_frame();
     // Add for paintevent update timer - Mingfan 20170516
@@ -371,12 +372,17 @@ void widget::readAdData(QVector< double > &xData,  QVector<double> &yData){
 
 void widget::plotAdCurve(){
 
+//	    if(feof(video_ptr))//測試是否到了檔案結束位置
+//    {
+//        close();
+
+//    }
     readAdData(xData,yData);
     p_adplot->setSamples(xData,yData);
 
     p_adplot->attach(ui->qwtPlot);
     ui->qwtPlot->replot();
-//    adPlotTimer->start(1000);
+    adPlotTimer->start(1000);
 //    qDebug()<<"adPlotTimer = "<<1000;
 }
 

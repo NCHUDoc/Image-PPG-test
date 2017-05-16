@@ -79,6 +79,7 @@ public:
         label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setGeometry(QRect(40, 30, 471, 451));
+        label->setFrameShape(QFrame::NoFrame);
 
         retranslateUi(widget);
 
@@ -87,13 +88,13 @@ public:
 
     void retranslateUi(QWidget *widget)
     {
-        widget->setWindowTitle(QApplication::translate("widget", "widget", 0, QApplication::UnicodeUTF8));
+        widget->setWindowTitle(QApplication::translate("widget", "win_camera_AVI", 0, QApplication::UnicodeUTF8));
         pushButton_1->setText(QApplication::translate("widget", "Start", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("widget", "Close", 0, QApplication::UnicodeUTF8));
         RRI->setText(QApplication::translate("widget", "RRI", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("widget", "HR", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("widget", "LF/HF", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("widget", "TextLabel", 0, QApplication::UnicodeUTF8));
+        label->setText(QString());
     } // retranslateUi
 
 };

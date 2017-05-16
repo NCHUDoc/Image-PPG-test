@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>widget</string>
+   <string>win_camera_AVI</string>
   </property>
   <widget class="QLCDNumber" name="RRI_LCD">
    <property name="geometry">
@@ -149,8 +149,11 @@
      <height>451</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::NoFrame</enum>
+   </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string/>
    </property>
   </widget>
  </widget>
