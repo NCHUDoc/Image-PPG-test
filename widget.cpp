@@ -173,7 +173,16 @@ void widget::paintEvent(QPaintEvent *)
 //      enable=0;
 //      qDebug()<<"enable = "<<enable;
     int i;
-    int vv;
+    //int vv;
+//    IplImage*iplImg;
+
+    uchar* camData = new uchar[frame.total()*4];
+    Mat continuousRGBA(frame.size(), CV_8UC4, camData);
+    //cv::cvtColor(frame, continuousRGBA, CV_BGR2RGBA, 4);
+
+    //Mat rgbFrame(640, 480, CV_8UC3);;
+    Mat frm;
+    Mat newSrc = Mat(rgbFrame.rows, rgbFrame.cols, CV_8UC4);
     double t30 [cal_time*framerate],tRRI[2*cal_time],sumRRI,meanRRI;
 
     int ONE_SIZE= X_SIZE* Y_SIZE;//640*480 sequence
@@ -184,20 +193,26 @@ void widget::paintEvent(QPaintEvent *)
         // Add open cv
         fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
 
-        VideoCapture cap(0); // open the default camera
-        //if(!cap.isOpened())  // check if we succeeded
-          //  return -1;
-        Mat edges;
-        namedWindow("edges",1);
-        for(vv=0;vv<100;vv++)
-        {
-            Mat frm;
-            cap >> frm; // get a new frame from camera
-            cvtColor(frm, edges, CV_BGR2BGRA);
-            imshow("edges", edges);
-        }
-//        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
-//        qDebug()<<"=================================";
+//        VideoCapture cap(0); // open the default camera
+//        //if(!cap.isOpened())  // check if we succeeded
+//          //  return -1;
+
+////        namedWindow("edges",1);
+////        for(vv=0;vv<100;vv++)
+////        {
+
+//            cap >> frm; // get a new frame from camera
+            cvtColor(frm, continuousRGBA, CV_BGR2BGRA);
+            // ...now let it convert it to RGBA
+            img.LoadFromPixels(frame.cols, frame.rows, camData);
+
+//            int from_to[] = { 0,0, 1,1, 2,2, 3,3 };
+//            mixChannels(&rgbFrame, 2, &newSrc, 1, from_to, 4);
+////            imshow("edges", edges);
+////        }
+////        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
+////        qDebug()<<"=================================";
+//          iplImg = edges;
         ///////////////422-420
 //        for(int y=0;y<480;y++)
 //            for(int x=0;x<640;x++)
@@ -302,7 +317,8 @@ void widget::paintEvent(QPaintEvent *)
 
 //    //Box();
 //    frame->loadFromData(rgb_buffer,640 * 480 * 3);
-    frame->loadFromData(r_buffer,640 * 480 );
+    frame->loadFromData(newSrc,640 * 480 );
+/*    frame->loadFromData(edges,640 * 480 * 3)*/;
     ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
 
  //   rs = vd->unget_frame();
