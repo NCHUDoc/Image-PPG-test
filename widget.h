@@ -53,7 +53,7 @@ public:
 
     double wave30[30*60];
     double wave256[256*60];
-    double RRI_a[150],RRI_b[fs*cal_time],rR_peak[150],RRI_c[fs*cal_time],freq[128],power[128];
+    double RRI_a[150],RRI_b[2*cal_time],rR_peak[150],RRI_c[2*cal_time],freq[128],power[128];
     double RRI_mean,ration;
     int f_time,updata,HR,len_RRI_a,enable;
     //ADD******************************************************************************

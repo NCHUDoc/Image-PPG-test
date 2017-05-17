@@ -15,7 +15,7 @@
 #define framerate 30
 #define samplerate 256
 #define updata_time 4
-#define fs 2
+//#define fs 2
 #define nfft 128
 
 #define b_x1 270

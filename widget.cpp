@@ -34,6 +34,9 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qfiledialog.h>
+// Add open cv
+#include "opencv2/opencv.hpp"
+using namespace cv;
 
 #define X_SIZE 640 //640*480 sequence
 #define Y_SIZE 480 //640*480 sequence
@@ -170,15 +173,29 @@ void widget::paintEvent(QPaintEvent *)
 //      enable=0;
 //      qDebug()<<"enable = "<<enable;
     int i;
-    double t30 [cal_time*framerate],tRRI[fs*cal_time],sumRRI,meanRRI;
+    int vv;
+    double t30 [cal_time*framerate],tRRI[2*cal_time],sumRRI,meanRRI;
 
     int ONE_SIZE= X_SIZE* Y_SIZE;//640*480 sequence
 
 
     if(enable==1)
     {
-
+        // Add open cv
         fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
+
+        VideoCapture cap(0); // open the default camera
+        //if(!cap.isOpened())  // check if we succeeded
+          //  return -1;
+        Mat edges;
+        namedWindow("edges",1);
+        for(vv=0;vv<100;vv++)
+        {
+            Mat frm;
+            cap >> frm; // get a new frame from camera
+            cvtColor(frm, edges, CV_BGR2BGRA);
+            imshow("edges", edges);
+        }
 //        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
 //        qDebug()<<"=================================";
         ///////////////422-420
@@ -240,12 +257,12 @@ void widget::paintEvent(QPaintEvent *)
                         resample(t30, wave30,wave256,0.0039,30*60,256*60);//1/256=0.0039
                         R_peak(wave256,RRI_a,rR_peak);
 
-                        memset(tRRI, 0, fs*cal_time*sizeof(double));
-                        for(i=0;i<fs*cal_time;i++){
+                        memset(tRRI, 0, 2*cal_time*sizeof(double));
+                        for(i=0;i<2*cal_time;i++){
                             tRRI[i+1]= tRRI[i]+0.5;//0.5=1/fs
                             //printf("%d %.4f %.4f \n",i,t30[i],wave30[i]);
                         }
-                        int time_RRI_a=rR_peak[len_RRI_a]*fs-2;
+                        int time_RRI_a=rR_peak[len_RRI_a]*2-2;
                         resample(rR_peak, RRI_a,RRI_b,0.5,len_RRI_a,time_RRI_a);//1/2=0.5
                         for(i=0;i<time_RRI_a;i++){
                             sumRRI= sumRRI+RRI_b[i];
