@@ -36,6 +36,9 @@ public:
     QLabel *label_2;
     QLabel *label_3;
     QLabel *label;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLabel *label_6;
 
     void setupUi(QWidget *widget)
     {
@@ -44,13 +47,13 @@ public:
         widget->resize(1023, 633);
         RRI_LCD = new QLCDNumber(widget);
         RRI_LCD->setObjectName(QString::fromUtf8("RRI_LCD"));
-        RRI_LCD->setGeometry(QRect(80, 550, 101, 51));
+        RRI_LCD->setGeometry(QRect(80, 570, 101, 51));
         HR_LCD = new QLCDNumber(widget);
         HR_LCD->setObjectName(QString::fromUtf8("HR_LCD"));
-        HR_LCD->setGeometry(QRect(240, 550, 111, 51));
+        HR_LCD->setGeometry(QRect(240, 570, 111, 51));
         ration_LCD = new QLCDNumber(widget);
         ration_LCD->setObjectName(QString::fromUtf8("ration_LCD"));
-        ration_LCD->setGeometry(QRect(430, 550, 71, 51));
+        ration_LCD->setGeometry(QRect(430, 570, 101, 51));
         pushButton_1 = new QPushButton(widget);
         pushButton_1->setObjectName(QString::fromUtf8("pushButton_1"));
         pushButton_1->setGeometry(QRect(690, 560, 75, 23));
@@ -59,27 +62,44 @@ public:
         pushButton_2->setGeometry(QRect(840, 560, 75, 23));
         qwtPlot = new QwtPlot(widget);
         qwtPlot->setObjectName(QString::fromUtf8("qwtPlot"));
-        qwtPlot->setGeometry(QRect(530, 20, 431, 241));
+        qwtPlot->setGeometry(QRect(600, 30, 391, 241));
         qwtPlot->setFrameShape(QFrame::StyledPanel);
         qwtPlot->setFrameShadow(QFrame::Raised);
         psdPlot = new QwtPlot(widget);
         psdPlot->setObjectName(QString::fromUtf8("psdPlot"));
-        psdPlot->setGeometry(QRect(530, 310, 431, 181));
+        psdPlot->setGeometry(QRect(600, 310, 381, 201));
         psdPlot->setFrameShape(QFrame::StyledPanel);
         psdPlot->setFrameShadow(QFrame::Raised);
         RRI = new QLabel(widget);
         RRI->setObjectName(QString::fromUtf8("RRI"));
-        RRI->setGeometry(QRect(20, 570, 47, 12));
+        RRI->setGeometry(QRect(30, 570, 47, 51));
+        QFont font;
+        font.setFamily(QString::fromUtf8("Agency FB"));
+        font.setPointSize(18);
+        font.setBold(true);
+        font.setWeight(75);
+        RRI->setFont(font);
         label_2 = new QLabel(widget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(190, 570, 47, 12));
+        label_2->setGeometry(QRect(200, 580, 31, 31));
+        label_2->setFont(font);
         label_3 = new QLabel(widget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(370, 570, 47, 12));
+        label_3->setGeometry(QRect(370, 580, 47, 41));
+        label_3->setFont(font);
         label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(40, 30, 471, 451));
+        label->setGeometry(QRect(20, 30, 531, 511));
         label->setFrameShape(QFrame::NoFrame);
+        label_4 = new QLabel(widget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setGeometry(QRect(910, 10, 61, 20));
+        label_5 = new QLabel(widget);
+        label_5->setObjectName(QString::fromUtf8("label_5"));
+        label_5->setGeometry(QRect(860, 280, 121, 20));
+        label_6 = new QLabel(widget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+        label_6->setGeometry(QRect(930, 520, 51, 20));
 
         retranslateUi(widget);
 
@@ -95,6 +115,9 @@ public:
         label_2->setText(QApplication::translate("widget", "HR", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("widget", "LF/HF", 0, QApplication::UnicodeUTF8));
         label->setText(QString());
+        label_4->setText(QApplication::translate("widget", "Data 30fps", 0, QApplication::UnicodeUTF8));
+        label_5->setText(QApplication::translate("widget", "Power Spectrum Density ", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("widget", "1/1000Hz", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };
