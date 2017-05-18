@@ -48,9 +48,17 @@
     <rect>
      <x>690</x>
      <y>560</y>
-     <width>75</width>
-     <height>23</height>
+     <width>71</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>Start</string>
@@ -59,11 +67,19 @@
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>840</x>
+     <x>810</x>
      <y>560</y>
-     <width>75</width>
-     <height>23</height>
+     <width>71</width>
+     <height>51</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+     <pointsize>14</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>Close</string>
@@ -185,9 +201,17 @@
     <rect>
      <x>910</x>
      <y>10</y>
-     <width>61</width>
+     <width>71</width>
      <height>20</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
    </property>
    <property name="text">
     <string>Data 30fps</string>
@@ -196,14 +220,22 @@
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>860</x>
+     <x>900</x>
      <y>280</y>
-     <width>121</width>
+     <width>91</width>
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+     <pointsize>16</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
-    <string>Power Spectrum Density </string>
+    <string>Ratio of LF/HF</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_6">
@@ -215,8 +247,16 @@
      <height>20</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Agency FB</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
    <property name="text">
-    <string>1/1000Hz</string>
+    <string>4 Seconds</string>
    </property>
   </widget>
  </widget>
