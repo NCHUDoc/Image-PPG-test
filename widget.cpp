@@ -34,30 +34,25 @@
 #include <qfile.h>
 #include <qtextstream.h>
 #include <qfiledialog.h>
-// Add open cv
-#include "opencv2/opencv.hpp"
-using namespace cv;
+
+// Add open cv - Mingfanwei 20170518 (V4L only can be used in linux, window base must use opencv instead)
+// Note, if open cv is included, the debugger will be fail.
+//#include "opencv2/opencv.hpp"
+//using namespace cv;
 
 #define X_SIZE 640 //640*480 sequence
 #define Y_SIZE 480 //640*480 sequence
-//int ONE_SIZE= X_SIZE* Y_SIZE;
-////FILE *video_ptr;
-////QImage *frame;
-unsigned char y_color[480][640];
-//char *y_color = new char[10];
-unsigned char cb_img[240][320];
-unsigned char cr_img[240][320];
-//unsigned char rgb_buffer[640*480*3];
-//unsigned char  yuv_buffer_pointer[640*480*3];
-//qint8 enable;
-int w_max,w_min,h_max,h_min;
+
+// Eye detection program - Mingfanwei 20170518
+//int w_max,w_min,h_max,h_min;
 
 widget::widget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::widget)
 {
     ui->setupUi(this);
-//    //***********************LCD***************************************
+        // LCD monitor for HR,RRI and LF/HF - Mingfanwei 20170518
+        //***********************LCD***************************************
         ui->RRI_LCD->setSegmentStyle(QLCDNumber::Flat);   // Show RRI value real time(Object LCD_Number)
         ui->RRI_LCD->display(0);
         ui->HR_LCD->setSegmentStyle(QLCDNumber::Flat);      // Show HR value real time(Object LCD_Number)
@@ -67,7 +62,8 @@ widget::widget(QWidget *parent) :
         connect(ui->pushButton_1,SIGNAL(clicked()), this,SLOT(cal_start()));    //  Start Button (Object push_button)
         connect(ui->pushButton_2,SIGNAL(clicked()), this,SLOT(close()));        //  Cllose Button (Object push_button)
 
-//    //***********************wave***************************************************
+        // Qwtplot for r_buffer raw data monitor - Mingfanwei 20170518
+        //***********************wave***************************************************
         ui->qwtPlot->setCanvasBackground( QColor(0,0,0));
         ui->qwtPlot->setAxisScale(QwtPlot::xBottom,0,30*5);
         ui->qwtPlot->setAxisLabelAlignment(QwtPlot::xBottom, Qt::AlignLeft | Qt::AlignBottom);
@@ -77,12 +73,12 @@ widget::widget(QWidget *parent) :
         p_adplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
         p_adplot->attach(ui->qwtPlot);
 
-//        //time = 0.0;
-
+        //time = 0.0;
+        // Qwtplot(adplot timer) r_buffer raw data speed, but can not work with fread - Mingfanwei 20170518
         adPlotTimer = new QTimer();
         adPlotTimer->start(1000);//1000
 
-//        connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
+        //connect(adPlotTimer, SIGNAL(timeout()),this, SLOT(plotAdCurve()));
 
         QwtPlotGrid *grid = new QwtPlotGrid();
         grid->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
@@ -91,7 +87,8 @@ widget::widget(QWidget *parent) :
         grid->enableY(ui->qwtPlot);
         grid->enableYMin(ui->qwtPlot);
         grid->attach(ui->qwtPlot);
-        //*************************************************
+
+        // psdPlot for Power Spectrum Density of r_buffer - Mingfanwei 20170518
         //*********************psd*************************
 
         ui->psdPlot->setCanvasBackground( QColor(0,0,0));
@@ -103,12 +100,12 @@ widget::widget(QWidget *parent) :
         p_psdplot->setPen(QPen(Qt::green,1,Qt::SolidLine));
         p_psdplot->attach(ui->psdPlot);
 
-//        time = 0.0;
+        //time = 0.0;
 
-//        psdPlotTimer = new QTimer();
-//        psdPlotTimer->start();//1000
+        //psdPlotTimer = new QTimer();
+        //psdPlotTimer->start();//1000
 
-//        connect(psdPlotTimer, SIGNAL(timeout()),this, SLOT(plotPSDCurve()));
+        //connect(psdPlotTimer, SIGNAL(timeout()),this, SLOT(plotPSDCurve()));
 
         QwtPlotGrid *grid2 = new QwtPlotGrid();
         grid2->setPen(QPen(Qt::gray, 0.0, Qt::DotLine));
@@ -119,46 +116,13 @@ widget::widget(QWidget *parent) :
         grid2->attach(ui->psdPlot);
 
 
-//    //QFile file("new000.yuv");
-//    video_ptr = fopen("new000.yuv","rb");
-//    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
-//    //QFile file("out.txt");
-//    //QString bytes = "";
-//    //qint64 bytes;
-//    //file.open(QIODevice::ReadOnly);
-//    //QByteArray bytes = file.readAll();
-//    fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
+        //Open local file - Mingfanwei 20170518
 
-//    ///////////////422-420
-//    for(int y=0;y<480;y++)
-//        for(int x=0;x<640;x++)
-//            y_color[y][x]=yuv_buffer_pointer[2*(x+y*640)];
-
-//    for(int y=0;y<240;y++,y++)
-//        for(int x=0;x<320;x++,x++)
-//            {
-//                cb_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+1];
-//                cr_img[y][x]=yuv_buffer_pointer[(x+y*640)*4+3];
-//            }
-//    //QDataStream data(&file);
-//    //qint8 bytes = file.read(static_cast<char *>(y_color), sizeof(y_color));
-//    //qint16 bytes;
-//    //data >> bytes;
-
-//    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][0];
-//    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][1];
-//    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][2];
-//    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][3];
-//    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][4];
-//    qDebug()<<"Read one byte from file new000.yuv: "<<y_color[0][5];
-    //file.close();
-    video_ptr = fopen("zz05.yuv","rb");
-    //video_ptr = fopen("C:/Users/User/git/Imag-PPG-test/zz05.yuv","rb");
-//    frame = new QImage(rgb_buffer,640,480,QImage::Format_RGB888);
-    frame = new QImage(r_buffer,640,480,QImage::Format_Indexed8);
-    qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
-    qDebug()<<"Read one byte from file zz05.yuv: "<<video_ptr;
-    qDebug()<<"=================================";
+        video_ptr = fopen("zz05.yuv","rb");
+        frame = new QImage(r_buffer,640,480,QImage::Format_Indexed8);
+        //qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
+        //qDebug()<<"Read one byte from file zz05.yuv: "<<video_ptr;
+        //qDebug()<<"=================================";
 
 }
 
@@ -169,50 +133,33 @@ widget::~widget()
 
 void widget::paintEvent(QPaintEvent *)
 {
-      // Test paintEvent
-//      enable=0;
-//      qDebug()<<"enable = "<<enable;
     int i;
-    //int vv;
-//    IplImage*iplImg;
-
-    uchar* camData = new uchar[frame.total()*4];
-    Mat continuousRGBA(frame.size(), CV_8UC4, camData);
-    //cv::cvtColor(frame, continuousRGBA, CV_BGR2RGBA, 4);
-
-    //Mat rgbFrame(640, 480, CV_8UC3);;
-    Mat frm;
-    Mat newSrc = Mat(rgbFrame.rows, rgbFrame.cols, CV_8UC4);
+    // Add for opencv - Mingfanwei 20170518
+    //Mat edges;
+    //Mat frm;
     double t30 [cal_time*framerate],tRRI[2*cal_time],sumRRI,meanRRI;
 
-    int ONE_SIZE= X_SIZE* Y_SIZE;//640*480 sequence
+    int ONE_SIZE= X_SIZE* Y_SIZE;   //640*480 sequence
 
 
     if(enable==1)
     {
-        // Add open cv
+        // File read to yuv buffer without webcam - Mingfanwei 20170518
         fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
 
-//        VideoCapture cap(0); // open the default camera
-//        //if(!cap.isOpened())  // check if we succeeded
-//          //  return -1;
+        // Add for opencv - Mingfanwei 20170518
+        //int vv;
+        /*VideoCapture cap(0); // open the default camera
+        namedWindow("edges",1);
+            for(vv=0;vv<20;vv++)
+            {
 
-////        namedWindow("edges",1);
-////        for(vv=0;vv<100;vv++)
-////        {
+                cap >> frm; // get a new frame from camera
+                cvtColor(frm, edges, CV_BGR2BGRA);
+                imshow("edges", edges);
+            }*/
 
-//            cap >> frm; // get a new frame from camera
-            cvtColor(frm, continuousRGBA, CV_BGR2BGRA);
-            // ...now let it convert it to RGBA
-            img.LoadFromPixels(frame.cols, frame.rows, camData);
-
-//            int from_to[] = { 0,0, 1,1, 2,2, 3,3 };
-//            mixChannels(&rgbFrame, 2, &newSrc, 1, from_to, 4);
-////            imshow("edges", edges);
-////        }
-////        qDebug()<<">>widget::paintEvent(QPaintEvent *)";
-////        qDebug()<<"=================================";
-//          iplImg = edges;
+// Eye detection - Mingfanwei 20170518
         ///////////////422-420
 //        for(int y=0;y<480;y++)
 //            for(int x=0;x<640;x++)
@@ -250,8 +197,6 @@ void widget::paintEvent(QPaintEvent *)
 
     if(enable==1)
     {
-//            qDebug()<<"rgb_average";
-//            rgb_average(h_min,h_max,w_min,w_max);
             rgb_average();
             plotAdCurve();
 
@@ -315,13 +260,12 @@ void widget::paintEvent(QPaintEvent *)
     }
 
 
-//    //Box();
-//    frame->loadFromData(rgb_buffer,640 * 480 * 3);
-    frame->loadFromData(newSrc,640 * 480 );
-/*    frame->loadFromData(edges,640 * 480 * 3)*/;
-    ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
+      // Face frame size 320*240, not working with r_buffer - Mingfanwei 20170518
+      //Box();
+      frame->loadFromData(r_buffer,640 * 480);
+      ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
 
- //   rs = vd->unget_frame();
+    // rs = vd->unget_frame();
     // Add for paintevent update timer - Mingfan 20170516
     this->update();
 }
@@ -347,9 +291,10 @@ int widget::convert_yuv_to_rgb_buffer()
         g = y0 - (0.698001 * (v-128)) - (0.337633 * (u-128));
         b = y0 + (1.732446 * (u-128)); //YUV420
 
-//       /*  r = y0 + 1.042*(v-128);
-//         g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
-//         b = y0 + 1.772*(u-128);*/ // YUV422
+        // Use 420 transfer - Mingfanwei 20170518
+        /*  r = y0 + 1.042*(v-128);
+         g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
+         b = y0 + 1.772*(u-128);*/ // YUV422
 
         if(r > 255) r = 255;
         if(g > 255) g = 255;
@@ -357,17 +302,21 @@ int widget::convert_yuv_to_rgb_buffer()
         if(r < 0) r = 0;
         if(g < 0) g = 0;
         if(b < 0) b = 0;
-//        rgb_buffer[out++] = r;
-//        rgb_buffer[out++] = g;
-//        rgb_buffer[out++] = b;
+        // Only fetch r_buffer - Mingfanwei 20170518
+        /*
+        rgb_buffer[out++] = r;
+        rgb_buffer[out++] = g;
+        rgb_buffer[out++] = b;*/
         r_buffer[g_out++]= r;
+
         r = y1 + (1.370705 * (v-128));
         g = y1 - (0.698001 * (v-128)) - (0.337633 * (u-128));
         b = y1 + (1.732446 * (u-128)); //YUV420
 
-//       /* r = y0 + 1.042*(v-128);
-//        g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
-//        b = y0 + 1.772*(u-128);*/ // YUV422
+        // Use 420 transfer - Mingfanwei 20170518
+        /* r = y0 + 1.042*(v-128);
+        g = y0 - 0.34414*(u-128) - 0.71414*(v-128);
+        b = y0 + 1.772*(u-128);*/ // YUV422
 
         if(r > 255) r = 255;
         if(g > 255) g = 255;
@@ -375,9 +324,11 @@ int widget::convert_yuv_to_rgb_buffer()
         if(r < 0) r = 0;
         if(g < 0) g = 0;
         if(b < 0) b = 0;
-//        rgb_buffer[out++] = r;
-//        rgb_buffer[out++] = g;
-//        rgb_buffer[out++] = b;
+        // Only fetch r_buffer - Mingfanwei 20170518
+        /*
+        rgb_buffer[out++] = r;
+        rgb_buffer[out++] = g;
+        rgb_buffer[out++] = b;*/
 
         r_buffer[g_out++]= r;
 
@@ -443,7 +394,24 @@ void widget::plotPSDCurve(){
 
 }
 
+// While press start btn, enable flag = 1, start read file - Mingfanwei 20170518
 void widget::cal_start(){
     enable=1;
 //    qDebug()<<"enable = "<<enable;
 }
+
+// Face frame size 320*240 - Mingfanwei 20170518
+//void widget::Box(){
+//    int x,y;
+
+//    for(x=(b_x1-2)*3;x<(b_x2+3)*3;x=x+3)
+//    {
+//            for(y=(b_y1-2)*3;y<(b_y2+3)*3;y=y+3)
+//            {
+//                if(x==(b_x1-1)*3 || x==(b_x1-2)*3  || x==(b_x2+1)*3 || x==(b_x2+2)*3 || y==(b_y1-1)*3 || y==(b_y1-2)*3 || y==(b_y2+1)*3 || y==(b_y2+2)*3 ){
+//                    r_buffer[x*640+y+2] = 255;
+//                }
+
+//            }
+//    }
+//}
