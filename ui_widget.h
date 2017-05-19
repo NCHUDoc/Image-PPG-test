@@ -69,12 +69,12 @@ public:
         pushButton_2->setFont(font);
         qwtPlot = new QwtPlot(widget);
         qwtPlot->setObjectName(QString::fromUtf8("qwtPlot"));
-        qwtPlot->setGeometry(QRect(600, 30, 391, 241));
+        qwtPlot->setGeometry(QRect(670, 30, 321, 241));
         qwtPlot->setFrameShape(QFrame::StyledPanel);
         qwtPlot->setFrameShadow(QFrame::Raised);
         psdPlot = new QwtPlot(widget);
         psdPlot->setObjectName(QString::fromUtf8("psdPlot"));
-        psdPlot->setGeometry(QRect(600, 310, 381, 201));
+        psdPlot->setGeometry(QRect(670, 310, 311, 201));
         psdPlot->setFrameShape(QFrame::StyledPanel);
         psdPlot->setFrameShadow(QFrame::Raised);
         RRI = new QLabel(widget);
@@ -96,7 +96,7 @@ public:
         label_3->setFont(font1);
         label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(20, 30, 531, 511));
+        label->setGeometry(QRect(20, 30, 640, 480));
         label->setFrameShape(QFrame::NoFrame);
         label_4 = new QLabel(widget);
         label_4->setObjectName(QString::fromUtf8("label_4"));

@@ -282,7 +282,7 @@ void widget::paintEvent(QPaintEvent *)
 
 
       // Face frame size 320*240, not working with r_buffer - Mingfanwei 20170518
-      //Box();
+      Box();
       frame->loadFromData(r_buffer,640 * 480);
       ui->label->setPixmap(QPixmap::fromImage(*frame,Qt::AutoColor));
 
@@ -421,21 +421,33 @@ void widget::cal_start(){
 //    qDebug()<<"enable = "<<enable;
 }
 
-// Face frame size 320*240 - Mingfanwei 20170518
-//void widget::Box(){
-//    int x,y;
+void widget::Box(){
+    int x,y;
 
 //    for(x=(b_x1-2)*3;x<(b_x2+3)*3;x=x+3)
 //    {
 //            for(y=(b_y1-2)*3;y<(b_y2+3)*3;y=y+3)
 //            {
 //                if(x==(b_x1-1)*3 || x==(b_x1-2)*3  || x==(b_x2+1)*3 || x==(b_x2+2)*3 || y==(b_y1-1)*3 || y==(b_y1-2)*3 || y==(b_y2+1)*3 || y==(b_y2+2)*3 ){
-//                    r_buffer[x*640+y+2] = 255;
+//                    rgb_buffer[x*640+y] = 0;
+//                    rgb_buffer[x*640+y+1] = 0;
+//                    rgb_buffer[x*640+y+2] = 255;
 //                }
 
 //            }
 //    }
-//}
+    // Face frame size 320*240 , because only read r_buffer, so the scale must be resize - Mingfanwei 20170519
+    for(x=(b_x1-2);x<(b_x2+3);x=x+1)
+    {
+            for(y=(b_y1-2);y<(b_y2+3);y=y+1)
+            {
+                if(x==(b_x1-1) || x==(b_x1-2)  || x==(b_x2+1) || x==(b_x2+2) || y==(b_y1-1) || y==(b_y1-2) || y==(b_y2+1) || y==(b_y2+2) ){
+                   r_buffer[x*640+y] = 255;
+                }
+
+            }
+    }
+}
 void widget::cal_close(){
     cap.release();
     close();

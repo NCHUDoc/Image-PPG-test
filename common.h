@@ -18,10 +18,10 @@
 //#define fs 2
 #define nfft 128
 
-#define b_x1 270
-#define b_x2 340
-#define b_y1 220
-#define b_y2 480
+#define b_x1 240
+#define b_x2 310
+#define b_y1 200
+#define b_y2 460
 //#define pixel (b_x2-b_x1)*(b_y2-b_y1)
 
 

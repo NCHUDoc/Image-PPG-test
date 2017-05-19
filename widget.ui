@@ -88,9 +88,9 @@
   <widget class="QwtPlot" name="qwtPlot">
    <property name="geometry">
     <rect>
-     <x>600</x>
+     <x>670</x>
      <y>30</y>
-     <width>391</width>
+     <width>321</width>
      <height>241</height>
     </rect>
    </property>
@@ -104,9 +104,9 @@
   <widget class="QwtPlot" name="psdPlot">
    <property name="geometry">
     <rect>
-     <x>600</x>
+     <x>670</x>
      <y>310</y>
-     <width>381</width>
+     <width>311</width>
      <height>201</height>
     </rect>
    </property>
@@ -185,8 +185,8 @@
     <rect>
      <x>20</x>
      <y>30</y>
-     <width>531</width>
-     <height>511</height>
+     <width>640</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="frameShape">
