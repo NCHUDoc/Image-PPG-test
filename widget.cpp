@@ -37,9 +37,10 @@
 
 // Add open cv - Mingfanwei 20170518 (V4L only can be used in linux, window base must use opencv instead)
 // Note, if open cv is included, the debugger will be fail.
-//#include "opencv2/opencv.hpp"
-//using namespace cv;
-
+#include "opencv2/opencv.hpp"
+using namespace cv;
+// Add for opencv - Mingfanwei 20170519
+VideoCapture cap(0);
 #define X_SIZE 640 //640*480 sequence
 #define Y_SIZE 480 //640*480 sequence
 
@@ -60,7 +61,7 @@ widget::widget(QWidget *parent) :
         ui->ration_LCD->setSegmentStyle(QLCDNumber::Flat);  // Show Ratio of LF/HF real time(Object LCD_Number)
 
         connect(ui->pushButton_1,SIGNAL(clicked()), this,SLOT(cal_start()));    //  Start Button (Object push_button)
-        connect(ui->pushButton_2,SIGNAL(clicked()), this,SLOT(close()));        //  Cllose Button (Object push_button)
+        connect(ui->pushButton_2,SIGNAL(clicked()), this,SLOT(cal_close()));        //  Cllose Button (Object push_button)
 
         // Qwtplot for r_buffer raw data monitor - Mingfanwei 20170518
         //***********************wave***************************************************
@@ -118,7 +119,7 @@ widget::widget(QWidget *parent) :
 
         //Open local file - Mingfanwei 20170518
 
-        video_ptr = fopen("zz05.yuv","rb");
+//        video_ptr = fopen("zz05.yuv","rb");
         frame = new QImage(r_buffer,640,480,QImage::Format_Indexed8);
         //qDebug()<<">>widget::widget(QWidget *parent):QWidget(parent),ui(new Ui::widget)";
         //qDebug()<<"Read one byte from file zz05.yuv: "<<video_ptr;
@@ -134,18 +135,38 @@ widget::~widget()
 void widget::paintEvent(QPaintEvent *)
 {
     int i;
-    // Add for opencv - Mingfanwei 20170518
-    //Mat edges;
-    //Mat frm;
+
     double t30 [cal_time*framerate],tRRI[2*cal_time],sumRRI,meanRRI;
 
     int ONE_SIZE= X_SIZE* Y_SIZE;   //640*480 sequence
-
+    int p_out=0; int r_color;
 
     if(enable==1)
     {
+        // Add for opencv - Mingfanwei 20170519
+        cv::Mat frm;
+        cv::Mat edges;
+        cap.set(CV_CAP_PROP_FRAME_WIDTH, 640);
+        cap.set(CV_CAP_PROP_FRAME_HEIGHT, 480);
+        cap >> frm;
+
+        for(int y = 0; y < Y_SIZE;y++)
+        {
+            for(int x = 0; x < X_SIZE; x++)
+            {
+                // get pixel
+                cv::Vec3b color = frm.at<cv::Vec3b>(cv::Point(x,y));
+                r_color=color[2];
+                if(r_color > 255) r_color = 255;
+                if(r_color < 0) r_color = 0;
+                r_buffer[p_out++]=r_color;
+
+            }
+        }
+        cvtColor(frm, edges, CV_BGR2RGB);
+        imshow("edges", frm);
         // File read to yuv buffer without webcam - Mingfanwei 20170518
-        fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
+        //fread(yuv_buffer_pointer, sizeof(unsigned char), ONE_SIZE*2, video_ptr);
 
         // Add for opencv - Mingfanwei 20170518
         //int vv;
@@ -193,7 +214,7 @@ void widget::paintEvent(QPaintEvent *)
 //                }
     }
 
-    convert_yuv_to_rgb_buffer();
+//    convert_yuv_to_rgb_buffer();
 
     if(enable==1)
     {
@@ -415,3 +436,7 @@ void widget::cal_start(){
 //            }
 //    }
 //}
+void widget::cal_close(){
+    cap.release();
+    close();
+}

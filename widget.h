@@ -99,6 +99,7 @@ private slots:
     //void on_pushButton_start_clicked();
     void paintEvent(QPaintEvent *);
     void cal_start();
+    void cal_close();
 
 public slots:
 
