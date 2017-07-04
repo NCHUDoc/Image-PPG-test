@@ -35,6 +35,9 @@
 #include <qtextstream.h>
 #include <qfiledialog.h>
 
+// Add Qttimer to test HR - Mingfanwei 20170704
+QTime timer;
+
 // Add open cv - Mingfanwei 20170518 (V4L only can be used in linux, window base must use opencv instead)
 // Note, if open cv is included, the debugger will be fail.
 #include "opencv2/opencv.hpp"
@@ -266,17 +269,21 @@ void widget::paintEvent(QPaintEvent *)
                         }
                         //ADD******************************************************************************
                         plotPSDCurve();
-
-
+                        // Add Qttimer to test HR - Mingfanwei 20170704
+                        HR_timer = timer.elapsed();
+                        HR = HR*4000/HR_timer;
+                        ui->RRI_LCD->display(RRI_mean);
+                        ui->HR_LCD->display(HR);
+                        ui->ration_LCD->display(ration);
                        // printf("time=%4f \n",rR_peak[len_RRI_a-3]);
-
+                       // Add Qttimer to test HR - Mingfanwei 20170704
+                       timer.start();
 
             }
-
-                ui->RRI_LCD->display(RRI_mean);
-                ui->HR_LCD->display(HR);
-                ui->ration_LCD->display(ration);
-
+                // Comment for plot time - Mingfanwei 20170704
+                // ui->RRI_LCD->display(RRI_mean);
+                // ui->HR_LCD->display(HR);
+                // ui->ration_LCD->display(ration);
         }
     }
 

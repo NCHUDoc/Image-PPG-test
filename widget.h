@@ -56,6 +56,8 @@ public:
     double RRI_a[150],RRI_b[2*cal_time],rR_peak[150],RRI_c[2*cal_time],freq[128],power[128];
     double RRI_mean,ration;
     int f_time,updata,HR,len_RRI_a,enable;
+    // Add Qttimer to test HR - Mingfanwei 20170704
+    int HR_timer;
     //ADD******************************************************************************
     int xxx ;
     int top,led_uptime,GG,BB,RR;
